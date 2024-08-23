@@ -110,7 +110,7 @@ class Standings extends Component {
     } catch (error) {}
   }
   UNSAFE_componentWillReceiveProps(nextProps) {
-    console.log({nextProps});
+    console.log({nextProps:nextProps?.member});
     this.setState({
       privateGroups: [
         {
@@ -185,16 +185,16 @@ class Standings extends Component {
   renderPrivateGroups = () => {
     try {
       const {user} = this.props;
-      const {groupData} = this.props.route.params.params;
+      const {groupData} = this.props.route.params;
       console.log('showing group data ', groupData);
       return (
         <View>
           <Text allowFontScaling={false} style={styles.headingText}>
-            Standings for {groupData.title ? groupData.title : 'No name'}
+            Standings for {groupData.title ? groupData.title : ''}
           </Text>
           <TouchableOpacity
             onPress={
-              this.props.route.params.params.standings == 'Private'
+              this.props.route.params.standings == 'Private'
                 ? () => this.showPrivateChat(groupData)
                 : null
             }>
@@ -323,7 +323,6 @@ class Standings extends Component {
                 this.state.filteredStandings.length > 0 ? (
                   this.state.filteredStandings.map((participant, index) => {
                     return (
-                      <>
                         <View key={index} style={styles.renderRow}>
                           <Text allowFontScaling={false} style={styles.id}>
                             {index + 1}
@@ -373,7 +372,6 @@ class Standings extends Component {
                             </Text>
                           )}
                         </View>
-                      </>
                     );
                   })
                 ) : (
@@ -405,7 +403,7 @@ class Standings extends Component {
   render() {
     const {user} = this.props;
     const {member, showModal} = this.state;
-    console.log('MEMBERS_', member);
+    console.log('MEMBERS_', member, JSON.stringify(this.props));
     return (
       <>
         <MeHeader
@@ -427,11 +425,11 @@ class Standings extends Component {
                 this.props.navigation.navigate('NewBet', {
                   fromStandingBet: 1,
                   participant: member,
-                }),
-                  this.toggleModal();
+                });
+                this.toggleModal();
               }}
               onMessageBtnPressed={() => {
-                this.props.route.params.params.standings == 'Private'
+                this.props.route.params.standings == 'Private'
                   ? this.showPrivateChat()
                   : this.showPublicChat(member),
                   this.toggleModal();
@@ -447,8 +445,8 @@ class Standings extends Component {
             )}
 
             <View>
-              {this.props.route.params.params
-                ? this.props.route.params.params.standings == 'Private'
+              {this.props.route.params
+                ? this.props.route.params.standings == 'Private'
                   ? this.renderPrivateGroups()
                   : this.renderPublicGroups()
                 : null}

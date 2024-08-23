@@ -1,15 +1,11 @@
 import React, {Component} from 'react';
 import * as Util from '../../../services';
-import {View, Text, TextInput, TouchableOpacity} from 'react-native';
+import {View} from 'react-native';
 import {connect} from 'react-redux';
 import {styles} from './styles';
-import {APPLICATION_CONSTANTS, COLORS, showToast} from '../../../services';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {MeButton} from '../../../components/MeButton';
 import * as TASKS from '../../../store/actions/index';
 import {WebView} from 'react-native-webview';
-
-import OneSignal from 'react-native-onesignal'; // Import package from node modules
 let playerId = '';
 let deviceToken = '';
 class PrivacyPolicy extends Component {
@@ -20,8 +16,6 @@ class PrivacyPolicy extends Component {
       password: '',
       playerId: '',
     };
-
-    // OneSignal.addEventListener('ids', this.onIds);
   }
 
   navigatePrivacyPolicy = () => {
@@ -36,8 +30,7 @@ class PrivacyPolicy extends Component {
   };
 
   render() {
-    const {phone_number, password} = this.state;
-    const params = this.props.route.params.params;
+    const params = this?.props?.route?.params;
     return (
       <>
         <WebView

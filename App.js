@@ -206,8 +206,11 @@ class App extends Component {
         } else if (betData.notification_type == 5) {
           console.log('2nd if block');
           navigate('WatchPartyContestStacks', {
-            standings: 'Private',
-            groupData: betData.response,
+            screen:'GroupDetails',
+            params: {
+              standings: 'Private',
+              groupData: betData.response,
+            },
           });
           this.navigatorRefDup?.current?.navigate('WatchPartyContestStacks', {
             standings: 'Private',
@@ -333,13 +336,6 @@ class App extends Component {
                 fromNotification: 1,
                 onTap: true,
               });
-              // navigate('Messages', {
-              //   standings: 'private',
-              //   groupData,
-              //   message,
-              //   fromNotification: 1,
-              //   onTap: true,
-              // });
             }, 500);
           }
         } else if (betData && betData.notification_type === 10) {
@@ -395,20 +391,6 @@ class App extends Component {
   checkApplicationVersion = async () => {
     console.log('CHECKER VERSION');
     try {
-      // const latestVersion =
-      //   Platform.OS === 'ios'
-      //     ? await fetch(
-      //         `https://itunes.apple.com/in/lookup?bundleId=com.undefeated.mk.app.live.app`,
-      //       )
-      //         .then(r => r.json())
-      //         .then(res => {
-      //           return res?.results[0]?.version;
-      //         })
-      //     : await VersionCheck.getLatestVersion({
-      //         provider: 'playStore',
-      //         packageName: 'com.undefeated.mk.app',
-      //         ignoreErrors: true,
-      //       });
       const androidPackageName = 'com.undefeated.mk.app'; // Add your Android package name here
 
       const latestVersion = await VersionCheck.getLatestVersion({
@@ -477,7 +459,6 @@ class App extends Component {
   }
 
   render() {
-    // console.log("LLLLLLLLLLLLLLLLLLLLLLLLLLLL",this.props)
     return (
       <SafeAreaView style={{flex: 1}}>
         <StatusBar backgroundColor={COLORS.appColour} />

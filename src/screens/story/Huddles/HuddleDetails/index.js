@@ -32,7 +32,6 @@ import ChatAndNews from './chatAndNews';
 import MeBottomNavbar from '../../../../components/BottomNavbar';
 import ShareButton from '../../../../components/ShareButton';
 
-
 let placeHolder = 'https://bitsofco.de/content/images/2018/12/broken-1.png';
 class ChatRoomDetails extends Component {
   state = {
@@ -67,7 +66,7 @@ class ChatRoomDetails extends Component {
         if (data.notification_type === 5) {
           // navigate('CompleteBets', {bet_id: betData.bet_id, isNotification: 1});7
           if (
-            props?.navigation?.state?.routeName === 'GroupDetails' &&
+            props?.route.routeName === 'GroupDetails' &&
             data.enable == 'false' &&
             props.user?.role !== 2
           ) {
@@ -88,27 +87,24 @@ class ChatRoomDetails extends Component {
     // OneSignal.addEventListener('received', data =>
     //   this.onReceived(data, this.props),
     // );
+    console.log("CUSTMMMM",props?.route,{props})
+   
   }
-  // componentWillUnmount() {
-  //   OneSignal.removeEventListener('received', data =>
-  //     this.onReceived(data, this.props),
-  //   );
-  // }
 
   async componentDidMount() {
     // BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
     console.log(
-      'INSIDE componentDidMount PROPS in chat room details ',
+      'INSIDE componentDidMount PROPS in chat room details',
       this.props,
       this.props.sportList,
     );
     // await dispatch(TASKS.getPickemWatchParty(params));
     try {
-      let {groupData} = this.props.route.params.params;
-      if (this.props.route.params.params.fromNotification == 1) {
+      let {groupData} = this.props.route.params;
+      if (this.props.route.params.fromNotification == 1) {
         console.log('ChatRoomDetails componentDidMount from Notification');
         let params1 = {
-          room_id: this.props.route.params.params.groupData.id,
+          room_id: this.props.route.params.groupData.id,
           auth_token: this.props.user.auth_token,
         };
         console.log(
@@ -129,7 +125,7 @@ class ChatRoomDetails extends Component {
         );
         groupData = getChatRoomByIdData.data;
 
-        this.props.route.params.params.groupData = groupData;
+        this.props.route.params.groupData = groupData;
         this.setState({
           navGroupParams1: groupData,
         });
@@ -248,7 +244,7 @@ class ChatRoomDetails extends Component {
   }
 
   async NotifyBtn() {
-    const {groupData} = this.props.route.params.params;
+    const {groupData} = this.props.route.params;
     const {user} = this.props;
 
     let obj = {
@@ -260,7 +256,7 @@ class ChatRoomDetails extends Component {
     await this.props.notifyBtnPressChatRoom(obj);
   }
   async NotifyContestMembersBtn() {
-    const {groupData} = this.props.route.params.params;
+    const {groupData} = this.props.route.params;
     const {user} = this.props;
 
     let obj = {
@@ -302,10 +298,16 @@ class ChatRoomDetails extends Component {
         });
     }
   }
+  // render(){
+  //   return <Text></Text>
+  // }
   render() {
     // const { params } = this.props.route.params;
-
-    const params = {groupData: this.props.route.params.params.groupData};
+    console.log(
+      'INSIDE<><>',
+      this.props,
+    );
+    const params = {groupData: this.props.route.params.groupData};
 
     //   params = {groupData: this.state.navGroupParams1};
     // else params = {groupData: this.props.route.params.params.groupData};
@@ -323,26 +325,7 @@ class ChatRoomDetails extends Component {
     const {user} = this.props;
 
     let backgroudImageHolder = APPLICATION_IMAGES.huddleAws;
-    // let profileImageHolder =
-    //   params && params.groupData
-    //     ? params.groupData.sport_name === 'basketball'
-    //       ? {uri: sportList[1].sport_image}
-    //       : params.groupData.sport_name === 'football'
-    //       ? {uri: sportList[0].sport_image}
-    //       : params.groupData.sport_name === 'tennis'
-    //       ? {uri: sportList[3].sport_image}
-    //       : params.groupData.sport_name === 'golf'
-    //       ? {uri: sportList[2].sport_image}
-    //       : params.groupData.sport_name === 'soccer'
-    //       ? {uri: sportList[4].sport_image}
-    //       : params.groupData.sport_name === 'hockey'
-    //       ? {uri: sportList[6].sport_image}
-    //       : params.groupData.sport_name === 'baseball'
-    //       ? {uri: sportList[7].sport_image}
-    //       : params.groupData.sport_name === 'nascar'
-    //       ? {uri: sportList[5].sport_image}
-    //       : null
-    //     : null;
+    
 
     return (
       <View style={styles.container}>
@@ -442,50 +425,26 @@ class ChatRoomDetails extends Component {
               </Text>
             </TouchableOpacity>
           )}
-          {
-            user &&
-            params?.groupData?.owner_information?.slug === user.slug ? (
-              <TouchableOpacity
-                style={styles.NotifyBtn}
-                onPress={() => this.NotifyBtn()}>
-                <Text style={styles.promoteTitle} allowFontScaling={false}>
-                  Notify
-                </Text>
-              </TouchableOpacity>
-            ) : null
-          }
+          {user && params?.groupData?.owner_information?.slug === user.slug ? (
+            <TouchableOpacity
+              style={styles.NotifyBtn}
+              onPress={() => this.NotifyBtn()}>
+              <Text style={styles.promoteTitle} allowFontScaling={false}>
+                Notify
+              </Text>
+            </TouchableOpacity>
+          ) : null}
         </ImageBackground>
 
-        {/* {user && user.role === 2 ? (
-          <TouchableOpacity
-            style={styles.NotifyContestMembersBtn}
-            onPress={() => this.NotifyContestMembersBtn()}>
-            <Text style={styles.notifyContestTitle} allowFontScaling={false}>
-              Notify Contest
-            </Text>
-          </TouchableOpacity>
-        ) : null} */}
+  
         <View style={styles.tabs}>
           <ChatAndNews
-            // groupData={this.props.route.params.params.groupData}
+            groupData={this.props.route.params.groupData}
             standings={'private'}
             navigation={this.props.navigation}
             navGroupParams1={this.state.navGroupParams1}
           />
         </View>
-        {/* 
-        <View style={styles.tabs}>
-          <Home
-            props={this.props}
-            group={{groupData: this.state.navGroupParams}}
-            getContestAllQuestion={this.props.getContestAllQuestion}
-            enableDisableQuesnContest={this.props.enableDisableQuesnContest}
-            contextAllQuestion={this.props.contextAllQuestion}
-            contestNotification={this.props.contestNotification}
-            awards={this.props.awards}
-            isUnread={this.state.isUnread}
-          />
-        </View> */}
         {user && user.role === APPLICATION_CONSTANTS.USER_ADMIN ? null : (
           <MeBottomNavbar />
         )}

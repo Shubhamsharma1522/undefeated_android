@@ -37,7 +37,7 @@ class AboutUs extends Component {
   //   };
 
   navigatePrivacyPolicy = () => {
-    this.props.navigation.navigate('AppPrivacyPolicy');
+    this.props.navigation.navigate('PrivacyPolicy');
     // this.props.navigation.navigate('SignUp');
   };
 

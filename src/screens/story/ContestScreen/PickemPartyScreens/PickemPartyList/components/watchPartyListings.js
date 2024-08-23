@@ -1,0 +1,59 @@
+//import liraries
+import React from 'react';
+import {View, Text, StyleSheet} from 'react-native';
+import {COLORS, FONTS, WP} from '../../../../../../services';
+import WatchPartyCard from './watchPartyItem';
+// create a component
+const WatchPartyListings = ({groups, allGroups, fromHome}) => {
+  // const myContest = useSelector(state => state.story.myPickemContest);
+  return (
+    <View style={styles.container}>
+      {groups && groups?.length > 0 ? (
+        groups.map(group => {
+          return <WatchPartyCard group={group} allGroups={allGroups} />;
+        })
+      ) : allGroups ? null : (
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '100%',
+          }}>
+          <Text
+            style={{
+              textAlign: 'center',
+              fontFamily: FONTS.appFont,
+              color: COLORS.appColour,
+            }}>
+            Click on All Pick'em Parties tab to join a Contest.
+          </Text>
+          {/* {!fromHome && groups && groups?.length === 0 && (
+            <View>
+              <Text
+                style={{
+                  textAlign: 'center',
+                  fontFamily: FONTS.appFont,
+                  color: COLORS.appColour,
+                }}>
+                No Contest Found.
+              </Text>
+            </View>
+          )} */}
+        </View>
+      )}
+    </View>
+  );
+};
+
+// define your styles
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: COLORS.white,
+    paddingHorizontal: WP('5'),
+    paddingTop: 5,
+  },
+});
+
+//make this component available to the app
+export default WatchPartyListings;

@@ -30,8 +30,8 @@ import {Share} from 'react-native';
 import {Alert} from 'react-native';
 import CustomButton from '../Home/Components';
 import MeBottomNavbar from '../../../components/BottomNavbar';
-import WatchPartyListingsContest from '../ContestwatchParty/components/watchPartyListings';
-import WatchPartyListingsPickem from '../PickemContestParty/components/watchPartyListings';
+import WatchPartyListingsContest from '../ContestScreen/ContestPartyScreens/ContestPartyLists/components/watchPartyListings';
+import WatchPartyListingsPickem from '../ContestScreen/PickemPartyScreens/PickemPartyList/components/watchPartyListings';
 import WatchPartyListingsChat from '../Huddles/HuddlesList/components/watchPartyListings';
 import SnapCarousel from '../../../components/SnapCarousel';
 // import { MeBottomNavbar } from '../../../components/BottomNavbar';
@@ -283,7 +283,7 @@ class Home extends Component {
 
   navigatePrivacyPolicy = () => {
     console.log('this is running', this.props, this.props.navigation.navigate);
-    this.props.navigation.navigate('AppPrivacyPolicy');
+    this.props.navigation.navigate('PrivacyPolicy');
   };
 
   onRefresh = () => {
@@ -535,25 +535,6 @@ class Home extends Component {
 
     return (
       <>
-        {/* FLAGGED */}
-        {/* <WatchPartyListingsChat
-          groups={flaggedChat}
-          allGroups={true}
-          fromHome={true}
-        />
-        <WatchPartyListingsContest
-          groups={flaggedContests}
-          allGroups={true}
-          fromHome={true}
-        />
-        <WatchPartyListingsPickem
-          groups={flaggedPickem}
-          allGroups={true}
-          fromHome={true}
-        /> */}
-
-        {/* PROMOTED AND FLAGGED CONTEST */}
-
         {sportsFeed &&
           sportsFeed?.promotedFeeds &&
           sportsFeed?.promotedFeeds.length > 0 &&
@@ -698,7 +679,7 @@ class Home extends Component {
             {user && user.role === APPLICATION_CONSTANTS.USER_ADMIN ? (
               <>
                 <MeWelcome
-                  userName={user ? user.username : 'No name'}
+                  userName={user ? user.username : ''}
                   // title={'All Bets'}
                   onPress={this.renderAllBets}
                 />
@@ -766,7 +747,7 @@ class Home extends Component {
               <>
                 <View style={styles.section}>
                   <MeWelcome
-                    userName={user ? user.username : 'No name'}
+                    userName={user ? user.username : ''}
                     onPress={this.renderAllBets}
                   />
                 </View>

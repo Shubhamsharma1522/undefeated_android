@@ -4,7 +4,6 @@ import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {
   COLORS,
   WP,
-  navigate,
   showToast,
   APPLICATION_IMAGE_CONSTANTS,
   APPLICATION_CONSTANTS,
@@ -18,10 +17,11 @@ import * as TASKS from '../../../../../store/actions/index';
 import {connect} from 'react-redux';
 import {NavigationActions} from 'react-navigation';
 import Dialog from 'react-native-dialog';
-
+import {useNavigation} from '@react-navigation/native';
 
 // create a component
 const WatchPartyCard = props => {
+  const navigation = useNavigation();
   // console.log('WatchPartyCard props here**', props);
 
   let profileImageHolder = APPLICATION_IMAGES.huddleAws;
@@ -69,10 +69,13 @@ const WatchPartyCard = props => {
   };
 
   const openDetails = () => {
-    console.log('watch party item chat room props', props);
-    navigate('ChatRoomStacks', {
-      standings: 'Private',
-      groupData: props.group,
+    console.log('watch party item chat room props', props.group);
+    return navigation.navigate('ChatRoomStacks', {
+      screen: 'ChatRoomDetails',
+      params: {
+        standings: 'Private',
+        groupData: props.group,
+      },
     });
   };
 
@@ -114,104 +117,96 @@ const WatchPartyCard = props => {
     // toggleModal();
     // setShowCodeDialog(false);
   };
-return <Text>12</Text>
-  // return (
-  //   !!props.sportList && (
-  //     <TouchableOpacity
-  //       key={props?.index}
-  //       style={styles.container}
-  //       disabled={
-  //         user && user?.role !== APPLICATION_CONSTANTS.USER_ADMIN
-  //           ? props.group.isJoined === 0
-  //             ? true
-  //             : false
-  //           : false
-  //       }
-  //       onPress={openDetails}>
-  //       <Image
-  //         source={
-  //           group.profile_image
-  //             ? {uri: group.profile_image}
-  //             : {uri: profileImageHolder}
-  //         }
-  //         style={styles.imageHeader}
-  //       />
+  return (
+    !!props.sportList && (
+      <TouchableOpacity
+        key={props?.index}
+        style={styles.container}
+        disabled={
+          user && user?.role !== APPLICATION_CONSTANTS.USER_ADMIN
+            ? props.group.isJoined === 0
+              ? true
+              : false
+            : false
+        }
+        onPress={openDetails}>
+        <Image
+          source={
+            group.profile_image
+              ? {uri: group.profile_image}
+              : {uri: profileImageHolder}
+          }
+          style={styles.imageHeader}
+        />
 
-  //       <UserListItem group={props.group} sportList={props.sportList} />
+        <UserListItem group={props.group} sportList={props.sportList} />
 
-  //       <View style={styles.memberInviteContainer}>
-  //         {props.group.members_list && props.group.members_list.length > 0 ? (
-  //           <MembersList group={props.group} />
-  //         ) : null}
-  //         {user && user?.role !== APPLICATION_CONSTANTS.USER_ADMIN ? (
-  //           !props.group.isJoined ? (
-  //             <MeButton
-  //               title={'Follow'}
-  //               onPress={joinGroup}
-  //               containerStyles={
-  //                 group.is_private === 1
-  //                   ? styles.joinPrivateBtnContainerFollow
-  //                   : styles.joinBtnContainer
-  //               }
-  //               textStyles={styles.btnText}
-  //             />
-  //           ) : (
-  //             <MeButton
-  //               title={'Unfollow'}
-  //               onPress={leaveGroup}
-  //               containerStyles={
-  //                 group.is_private === 1
-  //                   ? styles.joinBtnContainerUnfollow
-  //                   : styles.joinBtnContainer
-  //               }
-  //               textStyles={styles.btnText}
-  //             />
-  //           )
-  //         ) : null}
-  //         {user &&
-  //           // user?.role == APPLICATION_CONSTANTS.USER_ADMIN &&
-  //           group.is_private == 1 && (
-  //             <View>
-  //               <Text style={styles.privateText}>Private</Text>
-  //             </View>
-  //           )}
-  //       </View>
+        <View style={styles.memberInviteContainer}>
+          {props.group.members_list && props.group.members_list.length > 0 ? (
+            <MembersList group={props.group} />
+          ) : null}
+          {user && user?.role !== APPLICATION_CONSTANTS.USER_ADMIN ? (
+            !props.group.isJoined ? (
+              <MeButton
+                title={'Follow'}
+                onPress={joinGroup}
+                containerStyles={
+                  group.is_private === 1
+                    ? styles.joinPrivateBtnContainerFollow
+                    : styles.joinBtnContainer
+                }
+                textStyles={styles.btnText}
+              />
+            ) : (
+              <MeButton
+                title={'Unfollow'}
+                onPress={leaveGroup}
+                containerStyles={
+                  group.is_private === 1
+                    ? styles.joinBtnContainerUnfollow
+                    : styles.joinBtnContainer
+                }
+                textStyles={styles.btnText}
+              />
+            )
+          ) : null}
+          {user &&
+            // user?.role == APPLICATION_CONSTANTS.USER_ADMIN &&
+            group.is_private == 1 && (
+              <View>
+                <Text style={styles.privateText}>Private</Text>
+              </View>
+            )}
+        </View>
 
-  //       <JoinModal
-  //         isVisible={showModal}
-  //         group={props.group}
-  //         onClosePress={toggleModal}
-  //         onJoinPress={joinGroup}
-  //         onBackdropPress={toggleModal}
-  //         allGroups={props.allGroups}
-  //       />
-  //       <View>
-  //         <Dialog.Container visible={showCodeDialog}>
-  //           <Dialog.Title>Huddle Code</Dialog.Title>
-  //           <Dialog.Description>
-  //             Please enter Huddle code to join the private Huddle.
-  //           </Dialog.Description>
-  //           <Dialog.Input
-  //             maxLength={6}
-  //             style={{color: 'black'}}
-  //             onChangeText={e => {
-  //               setCodeText(e);
-  //             }}></Dialog.Input>
-  //           {/* <TextInput
-  //             allowFontScaling={false}
-  //             // placeholder={APPLICATION_CONSTANTS.contextWatchPartyTitle}
-  //             // placeholderTextColor={COLORS.black}
-  //             // style={styles.titlePlaceholder}
-  //             value={'title'}
-  //             // onChangeText=÷{text => this.setState({title: text})}
-  //           /> */}
-  //           <Dialog.Button label="Cancel" onPress={handleCancel} />
-  //           <Dialog.Button label="Join Huddle" onPress={handleJoin} />
-  //         </Dialog.Container>
-  //       </View>
-  //     </TouchableOpacity>
-  //   )
-  // );
+        <JoinModal
+          isVisible={showModal}
+          group={props.group}
+          onClosePress={toggleModal}
+          onJoinPress={joinGroup}
+          onBackdropPress={toggleModal}
+          allGroups={props.allGroups}
+        />
+        <View>
+          <Dialog.Container visible={showCodeDialog}>
+            <Dialog.Title>Huddle Code</Dialog.Title>
+            <Dialog.Description>
+              Please enter Huddle code to join the private Huddle.
+            </Dialog.Description>
+            <Dialog.Input
+              maxLength={6}
+              style={{color: 'black'}}
+              onChangeText={e => {
+                setCodeText(e);
+              }}></Dialog.Input>
+
+            <Dialog.Button label="Cancel" onPress={handleCancel} />
+            <Dialog.Button label="Join Huddle" onPress={handleJoin} />
+          </Dialog.Container>
+        </View>
+      </TouchableOpacity>
+    )
+  );
 };
 
 // define your styles

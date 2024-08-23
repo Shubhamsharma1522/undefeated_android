@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Text} from 'react-native';
+import {View, Text,Image} from 'react-native';
 
 import {MeButton} from '../../../components/MeButton';
 import {WP, APPLICATION_IMAGES} from '../../../services';

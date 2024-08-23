@@ -51,15 +51,15 @@ export const validateUsername = username => {
   // If all validations pass
   return true;
 };
-// export const isOnline = (success, reject) => {
-//   NetInfo.fetch().then(state => {
-//     if (state.isConnected) {
-//       success(true);
-//     } else {
-//       reject(false);
-//     }
-//   });
-// };
+export const isOnline = (success, reject) => {
+  NetInfo.fetch().then(state => {
+    if (state.isConnected) {
+      success(true);
+    } else {
+      reject(false);
+    }
+  });
+};
 
 export const showToast = (message, duration) => {
   // console.log("SHOW TOAST")
@@ -199,7 +199,7 @@ const openCamera = (success, reject) => {
     }
   });
 };
-const openLibrary = (success, reject) => {
+const openPhotoLibrary = (success, reject) => {
   const options = {
     quality: 0.1,
     // maxWidth: 700,
@@ -209,7 +209,7 @@ const openLibrary = (success, reject) => {
       cameraRoll: true,
       waitUntilSaved: true,
     },
-    mediaType: 'any',
+    mediaType: 'photo',
   };
   ImagePicker.launchImageLibrary(options, async response => {
     console.log('showImagePicker', response);
@@ -226,6 +226,39 @@ const openLibrary = (success, reject) => {
       const imageBase64Data = await getImageBase64(response.assets[0].uri);
       console.log({imageBase64Data});
       let source = {uri: {...response.assets[0], data: imageBase64Data}};
+      // You can also display the image using data:
+      // let source = { uri: 'data:image/jpeg;base64,' + response.data };
+      await success(source);
+    }
+  });
+};
+const openVideoLibrary = (success, reject) => {
+  const options = {
+    quality: 0.1,
+    // maxWidth: 700,
+    // maxHeight: 700,
+    storageOptions: {
+      skipBackup: true,
+      cameraRoll: true,
+      waitUntilSaved: true,
+    },
+    mediaType: 'video',
+  };
+  ImagePicker.launchImageLibrary(options, async response => {
+    console.log('showImagePicker', response);
+    if (response.didCancel) {
+      console.log('User cancelled video picker');
+      reject();
+    } else if (response.error) {
+      console.log('ImagePicker Error: ', response.error);
+      reject();
+    } else if (response.customButton) {
+      console.log('User tapped custom button: ', response);
+    } else if (response && response.assets && response.assets.length > 0) {
+      console.log({'imageBase64Data-before': response.assets});
+      // const imageBase64Data = await getImageBase64(response.assets[0].uri);
+      // console.log({imageBase64Data});
+      let source = {uri: {...response.assets[0]}};
       // You can also display the image using data:
       // let source = { uri: 'data:image/jpeg;base64,' + response.data };
       await success(source);
@@ -253,7 +286,7 @@ const requestPermission = async () => {
   }
 };
 
-export const getPicture = async (success, reject) => {
+export const getPicture = async (success, reject, onClosePopup) => {
   await requestPermission();
   Alert.alert(
     '',
@@ -270,15 +303,15 @@ export const getPicture = async (success, reject) => {
         id: 2,
         text: 'Choose from library...',
         onPress: () => {
-          openLibrary(success, reject);
+          openPhotoLibrary(success, reject);
         },
       },
       {
         id: 3,
         text: 'Close',
-        // onPress: () => {
-        //   openLibrary(success, reject);
-        // },
+        onPress: () => {
+          onClosePopup && onClosePopup();
+        },
       },
     ],
     {cancelable: true},
@@ -309,6 +342,11 @@ export const getPicture = async (success, reject) => {
   //     success(source);
   //   }
   // });
+};
+
+export const getVideosToUpload = async (success, reject) => {
+  await requestPermission();
+  await openVideoLibrary(success, reject);
 };
 
 export const isValidUrl = urlString => {

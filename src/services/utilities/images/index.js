@@ -82,6 +82,9 @@ export const APPLICATION_IMAGES = {
   plus: require('../../../../assets/icons/plus.png'),
   attach: require('../../../../assets/icons/attach.png'),
   down: require('../../../../assets/icons/downArrow.png'),
+  sendVideoWhiteIcon: require('../../../../assets/icons/upload_video_icon.png'),
+  sendVideoCreateTakeIcon: require('../../../../assets/icons/uploadVideoWhite.png'),
+  // uploadVideoWhite.png
   editIconWhite: 'https://www.iconsdb.com/icons/preview/white/edit-xxl.png',
   editIconBlack: 'https://www.iconsdb.com/icons/preview/black/edit-xxl.png',
   calendar: 'https://www.iconsdb.com/icons/preview/white/calendar-9-xxl.png',

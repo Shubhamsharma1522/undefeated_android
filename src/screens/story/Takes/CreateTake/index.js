@@ -12,7 +12,7 @@ import {
   Platform,
   Keyboard,
   ActivityIndicator,
-  Image
+  Image,
 } from 'react-native';
 import {View, Text} from 'react-native';
 import React, {useEffect, useRef, useState} from 'react';
@@ -442,7 +442,9 @@ const CreateTakes = props => {
                             />
                           ) : (
                             <Image
-                              source={APPLICATION_IMAGES.sendVideoWhiteIcon}
+                              source={
+                                APPLICATION_IMAGES.sendVideoCreateTakeIcon
+                              }
                               alt="image"
                               style={styles.attachmentIconImage}
                             />
@@ -457,21 +459,17 @@ const CreateTakes = props => {
                             transform: [{skewY: '-10deg'}],
                           }}
                         />
-                        {/* <TouchableOpacity
+                        <TouchableOpacity
                           style={[styles.attachmentImage, {paddingLeft: 12}]}
                           onPress={() => {
                             Keyboard.dismiss();
                             setEmoji(!isEmojiOpen);
-                          }}> */}
+                          }}>
                           <Image
                             source={APPLICATION_IMAGES.emoji_white}
                             style={styles.attachmentIconImage}
-                            onPress={() => {
-                              Keyboard.dismiss();
-                              setEmoji(!isEmojiOpen);
-                            }}
                           />
-                        {/* </TouchableOpacity> */}
+                        </TouchableOpacity>
                       </View>
                       <MeButton
                         title="Drop Take"
@@ -557,14 +555,10 @@ const styles = StyleSheet.create({
     width: '99%',
     alignItems: 'flex-end',
     marginBottom: 10,
-    // position: 'absolute',
-    // top: -50,
-    // right: 0,
   },
   listContainer: {
     marginBottom: 100,
     width: '100%',
-    // maxHeight:'55%',
   },
   ModalContainer: {
     backgroundColor: 'white',
@@ -572,23 +566,13 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     width: '100%',
   },
-  icons: {
-    height: '100%',
-    width: '100%',
-    resizeMode: 'contain',
-  },
-  keyboardicons: {
-    height: '100%',
-    width: '100%',
-    resizeMode: 'contain',
-  },
   emojiIconContainer: {
-    width: 50,
-    height: 50,
+    width: 30, // Adjusted size
+    height: 30, // Adjusted size
   },
   imageContainer: {
-    width: 50,
-    height: 50,
+    width: 50, // Adjusted size
+    height: 50, // Adjusted size
   },
   topLeftBorder: {
     position: 'absolute',
@@ -648,7 +632,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 0,
     borderLeftWidth: 0,
     borderRightWidth: 15,
-    borderBottomWidth: 400 - 65,
+    borderBottomWidth: 335,
     borderTopColor: 'transparent',
     borderRightColor: 'transparent',
     borderBottomColor: borderColor,
@@ -665,7 +649,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 0,
     borderRightWidth: 0,
     borderLeftWidth: 15,
-    borderBottomWidth: 400 - 65,
+    borderBottomWidth: 335,
     borderTopColor: 'transparent',
     borderRightColor: 'transparent',
     borderBottomColor: borderColor,
@@ -726,18 +710,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    // height: '100%',
   },
   attachmentImage: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    width: WP('1'),
-    maxHeight:25
+    width: 40, // Adjusted size
+    height: 40, // Adjusted size
   },
   attachmentIconImage: {
-    width: 25,
-    aspectRatio: 1,
+    width: 24, // Adjusted size
+    height: 24, // Adjusted size
   },
   footer: {
     display: 'flex',
@@ -815,7 +798,6 @@ const styles = StyleSheet.create({
   uploadedImage: {
     borderColor: COLORS.appColour,
     borderWidth: 1,
-    // width: '100%',
     marginRight: 10,
     position: 'relative',
   },
@@ -835,3 +817,294 @@ const styles = StyleSheet.create({
     zIndex: 10,
   },
 });
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     padding: 4,
+//     justifyContent: 'center',
+//     backgroundColor: '#000000AA',
+//   },
+//   modalCloser: {
+//     justifyContent: 'flex-end',
+//     width: '99%',
+//     alignItems: 'flex-end',
+//     marginBottom: 10,
+//     // position: 'absolute',
+//     // top: -50,
+//     // right: 0,
+//   },
+//   listContainer: {
+//     marginBottom: 100,
+//     width: '100%',
+//     // maxHeight:'55%',
+//   },
+//   ModalContainer: {
+//     backgroundColor: 'white',
+//     justifyContent: 'flex-end',
+//     alignItems: 'flex-end',
+//     width: '100%',
+//   },
+//   icons: {
+//     height: '100%',
+//     width: '100%',
+//     resizeMode: 'contain',
+//   },
+//   keyboardicons: {
+//     height: '100%',
+//     width: '100%',
+//     resizeMode: 'contain',
+//   },
+//   emojiIconContainer: {
+//     width: 50,
+//     height: 50,
+//   },
+//   imageContainer: {
+//     width: 50,
+//     height: 50,
+//   },
+//   topLeftBorder: {
+//     position: 'absolute',
+//     top: -22,
+//     left: -8,
+//     width: 0,
+//     height: 0,
+//     backgroundColor: 'transparent',
+//     borderStyle: 'solid',
+//     borderTopWidth: 0,
+//     borderLeftWidth: WP('50'),
+//     borderRightWidth: 0,
+//     borderBottomWidth: 10,
+//     borderTopColor: 'transparent',
+//     borderRightColor: 'transparent',
+//     borderBottomColor: borderColor,
+//     borderLeftColor: 'transparent',
+//   },
+//   topRightBorder: {
+//     position: 'absolute',
+//     top: -22,
+//     right: -8,
+//     width: 0,
+//     height: 0,
+//     backgroundColor: 'transparent',
+//     borderStyle: 'solid',
+//     borderTopWidth: 0,
+//     borderRightWidth: WP('50'),
+//     borderLeftWidth: 0,
+//     borderBottomWidth: 10,
+//     borderTopColor: 'transparent',
+//     borderRightColor: 'transparent',
+//     borderBottomColor: borderColor,
+//     borderLeftColor: 'transparent',
+//   },
+//   subContainer: {
+//     backgroundColor: COLORS.white,
+//     borderColor: borderColor,
+//     borderTopWidth: 12,
+//     borderBottomWidth: 12,
+//     borderLeftWidth: 8,
+//     borderRightWidth: 8,
+//     height: 350,
+//     zIndex: 2,
+//     display: 'flex',
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//   },
+//   leftTriangle: {
+//     position: 'absolute',
+//     left: 0,
+//     top: 0,
+//     width: 0,
+//     height: 0,
+//     backgroundColor: 'transparent',
+//     borderStyle: 'solid',
+//     borderTopWidth: 0,
+//     borderLeftWidth: 0,
+//     borderRightWidth: 15,
+//     borderBottomWidth: 400 - 65,
+//     borderTopColor: 'transparent',
+//     borderRightColor: 'transparent',
+//     borderBottomColor: borderColor,
+//     borderLeftColor: 'transparent',
+//   },
+//   rightTriangle: {
+//     position: 'absolute',
+//     right: 0,
+//     top: 0,
+//     width: 0,
+//     height: 0,
+//     backgroundColor: 'transparent',
+//     borderStyle: 'solid',
+//     borderTopWidth: 0,
+//     borderRightWidth: 0,
+//     borderLeftWidth: 15,
+//     borderBottomWidth: 400 - 65,
+//     borderTopColor: 'transparent',
+//     borderRightColor: 'transparent',
+//     borderBottomColor: borderColor,
+//     borderLeftColor: 'transparent',
+//   },
+//   card: {
+//     width: '90%',
+//     height: '100%',
+//     display: 'flex',
+//     justifyContent: 'space-between',
+//     paddingTop: 8,
+//   },
+//   mainContent: {
+//     flex: 1,
+//   },
+//   take: {
+//     paddingHorizontal: 8,
+//     paddingTop: 8,
+//     display: 'flex',
+//     flexDirection: 'row',
+//     justifyContent: 'space-between',
+//     alignItems: 'center',
+//     paddingBottom: 0,
+//   },
+//   userImage: {
+//     width: 40,
+//     aspectRatio: 1,
+//     borderRadius: 50,
+//     borderColor: COLORS.borderColor,
+//     borderWidth: 1,
+//     alignItems: 'center',
+//     justifyContent: 'center',
+//   },
+//   takeMessageField: {
+//     color: COLORS.black,
+//     height: '90%',
+//     width: '100%',
+//     textAlignVertical: 'top',
+//     margin: 0,
+//     borderRadius: 8,
+//     paddingTop: 10,
+//     fontFamily: FONTS.appFont,
+//     fontSize: 14,
+//   },
+//   takeMessageFieldwithList: {
+//     color: COLORS.black,
+//     maxHeight: 100,
+//     width: '100%',
+//     textAlignVertical: 'top',
+//     borderRadius: 8,
+//     margin: 0,
+//     paddingTop: 10,
+//     fontFamily: FONTS.appFont,
+//     fontSize: 14,
+//   },
+//   addAttachments: {
+//     display: 'flex',
+//     flexDirection: 'row',
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//     // height: '100%',
+//   },
+//   attachmentImage: {
+//     display: 'flex',
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//     width: WP('1'),
+//     maxHeight:25
+//   },
+//   attachmentIconImage: {
+//     width: 25,
+//     aspectRatio: 1,
+//   },
+//   footer: {
+//     display: 'flex',
+//     flexDirection: 'row',
+//     alignItems: 'center',
+//     justifyContent: 'space-between',
+//     backgroundColor: COLORS.appColour,
+//     paddingHorizontal: 12,
+//     marginHorizontal: 12,
+//     marginBottom: 12,
+//     height: 40,
+//   },
+//   footerLeftTriangle: {
+//     position: 'absolute',
+//     width: 0,
+//     height: 0,
+//     backgroundColor: 'transparent',
+//     borderStyle: 'solid',
+//     borderTopWidth: 0,
+//     borderRightWidth: 4,
+//     borderLeftWidth: 0,
+//     borderBottomWidth: 40,
+//     borderTopColor: 'transparent',
+//     borderRightColor: 'transparent',
+//     borderBottomColor: COLORS.white,
+//     borderLeftColor: 'transparent',
+//   },
+//   footerRightTriangle: {
+//     position: 'absolute',
+//     right: 0,
+//     width: 0,
+//     height: 0,
+//     backgroundColor: 'transparent',
+//     borderStyle: 'solid',
+//     borderTopWidth: 0,
+//     borderRightWidth: 0,
+//     borderLeftWidth: 4,
+//     borderBottomWidth: 40,
+//     borderTopColor: 'transparent',
+//     borderRightColor: 'transparent',
+//     borderBottomColor: COLORS.white,
+//     borderLeftColor: 'transparent',
+//   },
+//   sportSelectionBtnContainer: {
+//     width: '100%',
+//     height: 'auto',
+//     paddingHorizontal: 10,
+//     paddingVertical: 4,
+//     borderWidth: 0.5,
+//     borderRadius: 8,
+//     borderColor: COLORS.appColour,
+//     backgroundColor: COLORS.white,
+//   },
+//   sportSelectionBtnText: {
+//     color: COLORS.appColour,
+//     fontSize: WP('4'),
+//     fontFamily: FONTS.appFont,
+//   },
+//   sportSelectionContainer: {
+//     width: '80%',
+//   },
+//   createTakebtnContainer: {
+//     width: '100%',
+//     height: 'auto',
+//     paddingHorizontal: 18,
+//     paddingVertical: 4,
+//     borderRadius: 8,
+//     backgroundColor: COLORS.white,
+//   },
+//   createTakebtnText: {
+//     color: COLORS.appColour,
+//     fontSize: WP('4.5'),
+//     fontFamily: FONTS.appFont,
+//   },
+//   uploadedImage: {
+//     borderColor: COLORS.appColour,
+//     borderWidth: 1,
+//     // width: '100%',
+//     marginRight: 10,
+//     position: 'relative',
+//   },
+//   uploadedImageContainer: {
+//     flexDirection: 'row',
+//     alignItems: 'center',
+//     paddingVertical: 10,
+//   },
+//   deleteImage: {
+//     width: 20,
+//     height: 20,
+//   },
+//   deleteIconParent: {
+//     position: 'absolute',
+//     top: -5,
+//     right: -10,
+//     zIndex: 10,
+//   },
+// });

@@ -1,20 +1,25 @@
 import React, {useCallback, useState} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, Linking,Image} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Linking,
+  Image,
+} from 'react-native';
 
 import {getPreviewData} from 'react-native-link-preview';
 import Autolink from 'react-native-autolink';
 // import RNUrlPreview from 'react-native-url-preview';
 import MeVideoPlayer from '../../../../../components/MeVideoPlayer';
-import {
-  convertLocalTimeStamptoReadableTimeStamp,
-  ValidURL,
-} from '../../../../../services/helpers';
 import ReactionComponent from '../ReactionComponent';
 import {FlatList} from 'react-native';
 import uuid from 'react-native-uuid';
 import MeModal from '../../../../../components/MeModal';
 import {useSelector} from 'react-redux';
-const COLORS = {  borderColor: '#CBCBCB'}
+import {APPLICATION_IMAGES} from '../../../../../services';
+import moment from 'moment-timezone';
+const COLORS = {borderColor: '#CBCBCB'};
 const FONTS = {
   appFont: 'Arial',
   sfFont: 'SFNS Text',
@@ -23,13 +28,24 @@ const MESSAGE_TYPE = {
   IMAGE_ONLY: 'IMAGE_ONLY',
   TEXT_ONLY: 'TEXT_ONLY',
   IMAGE_WITH_TEXT: 'IMAGE_WITH_TEXT',
-}
+};
+const convertLocalTimeStamptoReadableTimeStamp = utcTimeStamp => {
+  // If time is before the last 24 hours
+  return moment.utc(utcTimeStamp).local().fromNow();
+  // if (moment.utc(utcTimeStamp).isBefore(moment().subtract(24, 'hours'))) {
+  //   // Format the timestamp to HH:mm AM/PM
+  //   return moment.utc(utcTimeStamp).local().format('hh:mm A');
+  // } else {
+  //   return moment.utc(utcTimeStamp).local().fromNow();
+  // }
+};
 const TakeNestedComponent = ({
   parentTake,
   showSelectedImageInFullScreen,
   setShowFullImg,
 }) => {
   const [playingVideoId, setPlayingVideoId] = useState(null);
+  const constants = JSON.parse(JSON.stringify(APPLICATION_IMAGES));
 
   const onplay = useCallback(uuid => {
     setPlayingVideoId(uuid);
@@ -64,10 +80,7 @@ const TakeNestedComponent = ({
       return (
         <View style={{padding: 10, backgroundColor: '#f0f0f0'}}>
           {image && (
-            <Image
-              source={{uri: image}}
-              style={{width: 100, height: 100}}
-            />
+            <Image source={{uri: image}} style={{width: 100, height: 100}} />
           )}
           <Text style={{fontSize: 16, fontWeight: 'bold'}}>{title}</Text>
           <Text>{description}</Text>
@@ -105,7 +118,7 @@ const TakeNestedComponent = ({
                 source={
                   senderData.profile_image
                     ? {uri: senderData?.profile_image}
-                    : {uri: APPLICATION_IMAGES.profilePicPlaceHolder}
+                    : {uri: constants?.profilePicPlaceHolder}
                 }
                 alt="user"
                 style={styles.userImage}
@@ -126,7 +139,8 @@ const TakeNestedComponent = ({
               <Text style={styles.tagName}>{sport}</Text>
             </View>
             <Text style={styles.time}>
-              {/* {convertLocalTimeStamptoReadableTimeStamp(createdAt)} */}
+              {convertLocalTimeStamptoReadableTimeStamp &&
+                convertLocalTimeStamptoReadableTimeStamp(createdAt)}
             </Text>
           </View>
         </View>

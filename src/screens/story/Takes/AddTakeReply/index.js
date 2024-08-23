@@ -45,7 +45,6 @@ import HashTagList from '../../../../components/HashTagList';
 import useHashtags from '../../../../hooks/useHashtags';
 import useMentionUser from '../../../../hooks/useMentionUser';
 import MentionedUsersList from '../../../../components/MentionedUsersList';
-import RNFetchBlob from 'rn-fetch-blob';
 import useTakesHelperFunction from '../../../../hooks/useTakesHelperFunctions';
 const AddTakeReply = props => {
   const {
@@ -83,7 +82,7 @@ const AddTakeReply = props => {
     props.navigation,
   );
   console.log('ADDTOREPLY_socket');
-  const {parentTake, takesRootParentId} = props.navigation.state.params;
+  const {parentTake, takesRootParentId} = props.route.params;
   const [textMessage, setTextMessage] = useState('');
   const [selection, setSelection] = useState({start: 0, end: 0});
   const user = useSelector(state => state.auth.user);

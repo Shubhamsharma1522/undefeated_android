@@ -17,11 +17,10 @@ import {
   WP,
   APPLICATION_IMAGE_CONSTANTS,
 } from '../../../../../../services';
-import {ChatNewsitems} from './components/chatNews';
 import {useDispatch, useSelector} from 'react-redux';
 import {enableDisableQuesnAutomateContest} from '../../../../../../store/actions/story';
 import {Platform} from 'react-native';
-const initialLayout = {width: Dimensions.get('window').width};
+// const initialLayout = {width: Dimensions.get('window').width};
 
 const Home = props => {
   const [contestQues, setContestQueston] = useState(null);
@@ -33,7 +32,7 @@ const Home = props => {
   // const [contestDetails, setContestDetails] = useState(null);
   const {params} = props.props.route.params;
   const dispatch = useDispatch();
-  const {selectedContest} = useSelector(state => state.story);
+  // const {selectedContest} = useSelector(state => state.story);
 
   // setTimeout(() => {
   //   setShowText(showText => !showText);
@@ -41,9 +40,9 @@ const Home = props => {
   // }, 2000);
   // console.log("enable",enable)
   useEffect(() => {
-    console.log('Home Mount');
+    console.log('Home Mount', props);
     const {groupData} = props.props.route.params.params;
-    const contestDetail = props.props.myContest;
+    // const contestDetail = props.props.myContest;
 
     console.log('groupDatagroupData', groupData);
     setContestActiveStatus(groupData?.is_active === 1 ? true : false);
@@ -92,7 +91,7 @@ const Home = props => {
   // }, [props.contextAllQuestion]);
 
   const checkContestFinishStatus = useCallback(() => {
-    const {groupData} = props?.props?.navigation?.state?.params;
+    const {groupData} = props?.props?.route.params;
     if (groupData?.is_active === 2) {
       return true;
     }
@@ -203,24 +202,6 @@ const Home = props => {
       setError(true);
     }
   };
-
-  // useEffect(() => {
-  //   console.log(' groupdata useeffect', props.group.groupData);
-  // }, [props.group.groupData]);
-
-  // const getContestDetails = details => {
-  //   if (details && details.length > 0) {
-  //     console.log('details', details, params.groupData.id);
-  //     let contestIndex = details.findIndex(
-  //       det => det.id == params.groupData.id,
-  //     );
-  //     console.log('contestIndex', contestIndex);
-  //     if (contestIndex > -1) {
-  //       setContestDetails(details[contestIndex]);
-  //     } else return false;
-  //   }
-  //   return false;
-  // };
   console.log('props.group', props.group);
   console.log('props.props', props.props);
   console.log('params.groupData', params.groupData);
@@ -256,15 +237,6 @@ const Home = props => {
           </Text>
         </View>
       ) : null}
-
-      {/* {props &&
-      props.group &&
-      props.group.groupData &&
-      props.group.groupData.participaint ? (
-        <Text style={styles.subTitle}>
-          {props.group.groupData.participaint} Players Playing
-        </Text>
-      ) : null} */}
 
       {props?.props.user && props?.props.user?.role === 2 ? (
         <View
@@ -321,73 +293,6 @@ const Home = props => {
           justifyContent: 'center',
           flexWrap: 'wrap',
         }}>
-        {/* {props &&
-        props.props &&
-        props.props.user &&
-        props.props.user.role === APPLICATION_CONSTANTS.USER_ADMIN ? (
-          <TouchableOpacity
-            onPress={() =>
-              props.props.navigation.navigate('QuestionList', {
-                ...params,
-                enable,
-              })
-            }
-            style={styles.viewIconTab}>
-            <Image source={APPLICATION_IMAGES.question} style={styles.image} />
-            <Text
-              style={{
-                alignItems: 'center',
-                justifyContent: 'center',
-                textAlign: 'center',
-                color: COLORS.appColour,
-                fontWeight: 'bold',
-              }}>
-              Questions
-            </Text>
-          </TouchableOpacity>
-        ) : props &&
-          props.group.groupData &&
-          (props.group.groupData.status === 1 ||
-            props.group.groupData.auto_question_status === 1) ? (
-          <TouchableOpacity
-            onPress={() =>
-              props.props.navigation.navigate('UserQuestionAnswer', params)
-            }
-            style={styles.viewIconTab}>
-            <Text style={styles.contestOn}>{showText ? 'ON' : ''}</Text>
-            {/* <Image source={APPLICATION_IMAGES.placeBet} style={styles.image} /> */}
-        {/* <Text
-          style={{
-            alignItems: 'center',
-            justifyContent: 'center',
-            textAlign: 'center',
-            color: COLORS.appColour,
-            fontWeight: 'bold',
-          }}>
-          Questions
-           </Text> */}
-        {/* </TouchableOpacity> */}
-        {/* )  */}
-        {/* : ( */}
-        {/* <TouchableOpacity
-          onPress={() =>
-            props.props.navigation.navigate('UserQuestionAnswer', params)
-          }
-          style={styles.viewIconTab}>
-          <Text style={styles.contestOn}>OFF</Text>
-            <Text
-            style={{
-              alignItems: 'center',
-              justifyContent: 'center',
-              textAlign: 'center',
-              color: COLORS.appColour,
-              fontWeight: 'bold',
-            }}>
-            Questions
-             </Text>
-        </TouchableOpacity> */}
-        {/* )} */}
-
         <TouchableOpacity
           style={styles.viewIconTab}
           onPress={() =>

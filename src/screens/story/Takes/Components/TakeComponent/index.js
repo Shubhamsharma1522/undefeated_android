@@ -7,16 +7,15 @@ import {
   FlatList,
   Linking,
   Dimensions,
-  Image
+  Image,
 } from 'react-native';
 // import {
 //   APPLICATION_CONSTANTS,
 //   APPLICATION_IMAGES,
 //   navigate,
 // } from '../../../../../services';
-import {APPLICATION_IMAGES} from '../../../../../services/utilities/images'
+import {APPLICATION_IMAGES} from '../../../../../services/utilities/images';
 // import {APPLICATION_CONSTANTS}  from '../../../../../services/strings/index'
-import {convertLocalTimeStamptoReadableTimeStamp} from '../../../../../services/helpers';
 import {useSelector} from 'react-redux';
 import ReactionComponent from '../ReactionComponent';
 import uuid from 'react-native-uuid';
@@ -25,8 +24,9 @@ import {getPreviewData} from 'react-native-link-preview';
 // import RNUrlPreview from 'react-native-url-preview';
 import MeModal from '../../../../../components/MeModal';
 import MeVideoPlayer from '../../../../../components/MeVideoPlayer';
-import { useNavigation } from '@react-navigation/native';
-const COLORS = {  borderColor: '#CBCBCB'}
+import {useNavigation} from '@react-navigation/native';
+import moment from 'moment-timezone';
+const COLORS = {borderColor: '#CBCBCB'};
 const FONTS = {
   appFont: 'Arial',
   sfFont: 'SFNS Text',
@@ -35,7 +35,17 @@ const MESSAGE_TYPE = {
   IMAGE_ONLY: 'IMAGE_ONLY',
   TEXT_ONLY: 'TEXT_ONLY',
   IMAGE_WITH_TEXT: 'IMAGE_WITH_TEXT',
-}
+};
+const convertLocalTimeStamptoReadableTimeStamp = utcTimeStamp => {
+  // If time is before the last 24 hours
+  return moment.utc(utcTimeStamp).local().fromNow();
+  // if (moment.utc(utcTimeStamp).isBefore(moment().subtract(24, 'hours'))) {
+  //   // Format the timestamp to HH:mm AM/PM
+  //   return moment.utc(utcTimeStamp).local().format('hh:mm A');
+  // } else {
+  //   return moment.utc(utcTimeStamp).local().fromNow();
+  // }
+};
 const TakeComponent = ({
   parentTake,
   showReactionContainer,
@@ -46,7 +56,12 @@ const TakeComponent = ({
   showTrashIcon,
   isOnPressActive,
 }) => {
-  const navigation = useNavigation()
+  const constants = JSON.parse(JSON.stringify(APPLICATION_IMAGES));
+  // console.log(
+  //   'APPLICATION_IMAGES>>>',
+  //   JSON.parse(JSON.stringify(APPLICATION_IMAGES)),
+  // );
+  const navigation = useNavigation();
   const [playingVideoId, setPlayingVideoId] = useState(null);
 
   const onplay = useCallback(uuid => {
@@ -66,7 +81,7 @@ const TakeComponent = ({
     },
     [playingVideoId, onplay],
   );
-  const {takesMessage, takesType, senderData, createdAt, sport, takesImg} =
+  const {takesMessage, takesType, senderData, sport, takesImg, createdAt} =
     parentTake;
   const user = useSelector(state => state.auth.user);
   const [showSendModal, setShowSendModal] = useState({
@@ -84,10 +99,7 @@ const TakeComponent = ({
       return (
         <View style={{padding: 10, backgroundColor: '#f0f0f0'}}>
           {image && (
-            <Image
-              source={{uri: image}}
-              style={{width: 100, height: 100}}
-            />
+            <Image source={{uri: image}} style={{width: 100, height: 100}} />
           )}
           <Text style={{fontSize: 16, fontWeight: 'bold'}}>{title}</Text>
           <Text>{description}</Text>
@@ -114,7 +126,9 @@ const TakeComponent = ({
     // Get the last part of the URL
     let lastPart = parts[parts.length - 1];
     console.log(lastPart);
-    return navigation.navigate('SearchedHashtagTakes', {searchedHashtag: lastPart});
+    return navigation.navigate('SearchedHashtagTakes', {
+      searchedHashtag: lastPart,
+    });
   };
   // const handlePressMenionedUser = url => {
   //   let parts = url.split('/');
@@ -140,7 +154,7 @@ const TakeComponent = ({
               source={
                 senderData?.profile_image
                   ? {uri: senderData?.profile_image}
-                  : {uri: APPLICATION_IMAGES.profilePicPlaceHolder}
+                  : {uri: constants?.profilePicPlaceHolder}
               }
               style={styles.userImage}
             />
@@ -158,15 +172,15 @@ const TakeComponent = ({
                   {senderData && senderData?.username}
                 </Text>
                 <Text style={styles.time}>
-                  {/* {convertLocalTimeStamptoReadableTimeStamp(createdAt)} */}
+                  {convertLocalTimeStamptoReadableTimeStamp &&
+                    convertLocalTimeStamptoReadableTimeStamp(createdAt)}
                 </Text>
               </View>
               <Text style={styles.tagName}>{sport}</Text>
             </View>
 
             {(takesType === MESSAGE_TYPE?.TEXT_ONLY ||
-              takesType ===
-                MESSAGE_TYPE?.IMAGE_WITH_TEXT) && (
+              takesType === MESSAGE_TYPE?.IMAGE_WITH_TEXT) && (
               <Autolink
                 url={true}
                 stripPrefix={false}
@@ -195,8 +209,7 @@ const TakeComponent = ({
 
             <View style={styles.postImagesContainer}>
               {(takesType === MESSAGE_TYPE?.IMAGE_ONLY ||
-                takesType ===
-                  MESSAGE_TYPE?.IMAGE_WITH_TEXT) &&
+                takesType === MESSAGE_TYPE?.IMAGE_WITH_TEXT) &&
                 takesImg && (
                   <TouchableOpacity onPress={() => console.log('')}>
                     <FlatList

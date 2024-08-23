@@ -40,12 +40,7 @@ const MeBottomNavbar = props => {
         <TouchableOpacity
           style={styles.tab}
           onPress={() => navigate('ChatRooms')}>
-          {/* <Image
-            source={APPLICATION_IMAGES.chat}
-            alt="chat"
-            style={styles.img}
-          /> */}
-          <Image
+                  <Image
             style={styles.img}
             source={APPLICATION_IMAGES.chat}
           />

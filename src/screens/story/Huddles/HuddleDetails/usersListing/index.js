@@ -41,7 +41,7 @@ const UsersListings = props => {
   };
 
   const onRedirectToMessage = person => {
-    let groupData = props.route.params.params.params.groupData;
+    let groupData = props.route.params.params.groupData;
     console.log('member**', member, groupData);
 
     setShowModal(false);
@@ -67,8 +67,7 @@ const UsersListings = props => {
   const removeMember = async member => {
     console.log('in remove member', member);
 
-    const {id, title, description, slug} =
-      props.route.params.params.params.groupData;
+    const {id, title, description, slug} = props.route.params.params.groupData;
     //    console.log("params in call done", params)
     // const {  selectedUser } = this.state
     console.log('showing selected user', selectedUser);
@@ -102,7 +101,7 @@ const UsersListings = props => {
     // setMember(member)
   };
 
-  const {params} = props.route.params.params;
+  const {params} = props.route.params;
   const user = useSelector(state => state.auth.user);
 
   return (

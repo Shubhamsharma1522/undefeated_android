@@ -9,7 +9,7 @@ import {
   Alert,
 } from 'react-native';
 import {connect, useSelector} from 'react-redux';
-import {useNavigationState} from '@react-navigation/native';
+import {useNavigation, useNavigationState} from '@react-navigation/native';
 import {MeHeader, MeSettingsHeader} from '../../../components/MeHeader';
 import {MeButton} from '../../../components/MeButton';
 import {
@@ -45,13 +45,14 @@ const SCREEN = {
   CHANGE_WEBSITE: 'ChangeWebsite',
   CHANGE_FAVORITE_TEAMS: 'ChangeFavoriteTeams',
   FRIENDLIST: 'FriendList',
-  APPPRIVACYPOLICY: 'AppPrivacyPolicy',
+  APPPRIVACYPOLICY: 'PrivacyPolicy',
 };
 
 const Settings = props => {
+ const navigation = useNavigation()
   const {user: loggedInUser} = useSelector(state => state.auth) || {};
-  console.log('Settings', props);
-  const validUserId = props.route.params.params?.userId || loggedInUser?.id;
+  console.log('Settings<><><>', props);
+  const validUserId = props?.route?.params?.userId || loggedInUser?.id;
   const isOwnProfile = validUserId === loggedInUser?.id;
 
   const {isLoading: isFetchingUserProfile, data: userProfile} =
@@ -135,31 +136,31 @@ const Settings = props => {
   const navigationRoutes = screen => {
     switch (screen) {
       case SCREEN.CHANGE_NAME:
-        props.navigation.navigate('ChangeName');
+        navigation.navigate('ChangeName');
         break;
       case SCREEN.CHANGE_EMAIL:
-        props.navigation.navigate('ChangeEmail');
+        navigation.navigate('ChangeEmail');
         break;
       case SCREEN.CHANGE_NUMBER:
-        props.navigation.navigate('ChangeNumber');
+        navigation.navigate('ChangeNumber');
         break;
       case SCREEN.FRIENDLIST:
-        props.navigation.navigate('FriendList');
+        navigation.navigate('FriendList');
         break;
       case SCREEN.CHANGE_BIO:
-        props.navigation.navigate('ChangeBio');
+        navigation.navigate('ChangeBio');
         break;
       case SCREEN.CHANGE_WEBSITE:
-        props.navigation.navigate('ChangeWebsite');
+        navigation.navigate('ChangeWebsite');
         break;
       case SCREEN.CHANGE_FAVORITE_TEAMS:
-        props.navigation.navigate('ChangeFavoriteTeams');
+        pnavigation.navigate('ChangeFavoriteTeams');
         break;
       case 4:
-        props.navigation.navigate('FriendList');
+        navigation.navigate('FriendList');
         break;
       case 5:
-        props.navigation.navigate('AppPrivacyPolicy');
+        navigation.navigate('PrivacyPolicy');
         break;
       default:
         break;

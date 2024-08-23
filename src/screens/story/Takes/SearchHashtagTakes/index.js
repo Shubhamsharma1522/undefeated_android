@@ -30,7 +30,7 @@ const ITEM_HEIGHT = 100; // Adjust this value based on your item height
 
 const SearchHashtagTakes = props => {
   console.log('props', props);
-  const {searchedHashtag} = props?.navigation?.state?.params;
+  const {searchedHashtag} = props?.route.params;
   const {isHashtagSelected, filteredTakes} = useSearchedTakes(searchedHashtag);
   const [refreshingState, setRefreshState] = useState(false);
   const [showFullImg, setShowFullImg] = useState(false);

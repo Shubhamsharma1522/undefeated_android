@@ -69,7 +69,7 @@ function RootNavigator() {
     onReady={() => setTopLevelNavigator(navigationRef.current)}
     >
       {isUserAuthenticated ? (
-        <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Home">
+        <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Standings">
           <Stack.Screen name="App" component={AppNavigator} />
         </Stack.Navigator>
       ) : (

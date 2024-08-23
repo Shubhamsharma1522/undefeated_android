@@ -25,7 +25,10 @@ import {
 import {COLORS, HP, getPicture} from '../../../../../services';
 import {useDispatch, useSelector} from 'react-redux';
 import ChatBox from '../../../../../components/chatBox';
-import {APPLICATION_CONSTANTS, APPLICATION_IMAGES} from '../../../../../services';
+import {
+  APPLICATION_CONSTANTS,
+  APPLICATION_IMAGES,
+} from '../../../../../services';
 import {styles} from './styles';
 import useChatSocket from '../../../../../hooks/useChatSocket';
 import {sendMessage} from '../../../../../services/utilities/sockets/index';
@@ -35,9 +38,11 @@ import EmojiSelector, {Categories} from 'react-native-emoji-selector';
 import ShowFullImg from '../../../showFullImg';
 import {MeButton} from '../../../../../components/MeButton';
 import useChatCache from '../../../../../hooks/useChatCache';
+import {useNavigation} from '@react-navigation/native';
 // import EmojiPicker from 'rn-emoji-keyboard';
 const ChatAndNewsScreen = props => {
   const scrollViewRef = useRef();
+  const navigation = useNavigation();
   const dispatch = useDispatch();
   const textInputRef = useRef(null);
   const [isEmojiOpen, setEmoji] = React.useState(false);
@@ -49,9 +54,10 @@ const ChatAndNewsScreen = props => {
   });
   const [selection, setSelection] = useState({start: 0, end: 0});
   // const [count, setCount] = useState(0);
-  const params = props?.navigation?.state?.params
-    ? props.route.params.params
-    : props.params;
+  // const params = {groupData: props?.groupData}
+  const params = props?.route?.params
+    ? props.route.params
+    : {groupData: props?.groupData};
   console.log('PARAMS INSIDE>>> HUDDLE', {params: params});
   const {isDisconnected, socket} = useChatSocket(
     params.groupData ? params.groupData.slug : null,
@@ -128,81 +134,6 @@ const ChatAndNewsScreen = props => {
       },
     );
   };
-  // const changeImage = () => {
-  //   // generatePresingedUrl
-  //   console.log('contest upload image ==>');
-  //   getPicture(
-  //     async image => {
-  //       console.log('showing getted image', image);
-  //       // const presignedUri = await dispatch(
-  //       //   TASKS.generatePresingedUrl({
-  //       //     auth_token: user.auth_token,
-  //       //     fileName: image.uri.fileName,
-  //       //     fileType: image.uri.type,
-  //       //   }),
-  //       // );
-  //       // console.log({presignedUri});
-  //       // const formData = new FormData();
-  //       // formData.append('file', {
-  //       //   uri: image.uri.uri,
-  //       //   type: image.uri.type, // Set the appropriate content type here, like 'image/jpeg' or 'video/mp4'
-  //       //   name: image.fileName, // Set the filename here
-  //       // });
-  //       // const myHeaders = new Headers({'Content-type': image.uri.type});
-  //       // const response = await fetch(presignedUri, {
-  //       //   method: 'PUT',
-  //       //   // headers: myHeaders,
-  //       //   body: formData,
-  //       // });
-  //       // console.log({response});
-  //       // this.setState({
-  //       //   image: image.uri.uri,
-  //       //   uploadingPath: 'data:image/jpeg;base64,' + image.uri.data,
-  //       // });
-
-  //       let chatImage = 'data:image/jpeg;base64,' + image.uri.data;
-
-  //       // onSend(chatImage);
-  //       showImageInFullScreen({
-  //         state: true,
-  //         fullImageSource: chatImage,
-  //         uploadMode: true,
-  //       });
-  //       // const {params} = this.props.route.params;
-
-  //       // // console.log('showing params before sending in on send method', params);
-  //       // let messagePrivateBody = {
-  //       //   auth_token: user.auth_token,
-  //       //   receiver_id: params.groupData ? params.groupData.slug : null,
-  //       //   message: 'image',
-  //       //   message_type: 2, // Individual = 1, Group = 2,
-  //       // };
-
-  //       // let auth_token = user.auth_token;
-  //       // let receiver_id = params.groupData ? params.groupData.slug : null;
-
-  //       // // let imageUrl = this.user?.profile_image;
-  //       // let username = user.username;
-  //       // if (msgType === 'group') {
-  //       // groupsenderMsg(
-  //       //   this.state.msgValue,
-  //       //   auth_token,
-  //       //   receiver_id,
-  //       //   source,
-  //       //   imageUrl,
-  //       //   username,
-  //       // )
-  //       //   .then(() => {
-  //       //     this.props.sendMessage(messagePrivateBody); //for oneSignal notification
-  //       //   })
-  //       //   .catch(err => console.log(err));
-  //     },
-  //     error => {
-  //       // showToast(APPLICATION_CONSTANTS.imageNotPossible);
-  //     },
-  //   );
-  // };
-
   const imgTap = chatImg => {
     // props.navigation.navigate('ShowFullImg', {
     //   img: chatImg,
@@ -405,9 +336,22 @@ const ChatAndNewsScreen = props => {
     // socket ? socket.connect() :
     // establishSocketConnection();
     // socket ? socket.connect() : establishSocketConnection();
-    props.navigation.replace('ChatAndNewsScreen', {
-      groupData: params.groupData,
-      standings: 'private',
+    // props.navigation.replace('ChatAndNewsScreen', {params:{
+    //   groupData: params.groupData,
+    //   standings: 'private',
+    // }});
+    // screen: 'ChatRoomDetails',
+    // params: {
+    //   standings: 'Private',
+    //   groupData: props.group,
+    // },
+    // navigation.replace
+    navigation.replace('ChatRoomStacks', {
+      screen: 'ChatRoomDetails',
+      params: {
+        standings: 'Private',
+        groupData: props.group,
+      },
     });
   };
   return (

@@ -6,11 +6,11 @@ import FollowerAndFollowingTabItem from './FollowerAndFollowingTabItem';
 
 const FollowerAndFollowingTab = props => {
   const isFollowersTab = props.tab === FOLLOW_ROUTES.FOLLOWERS;
-
+console.log("INSIDE FollowerAndFollowingTab",isFollowersTab,props)
   return (
     <FlatList
       ListEmptyComponent={() => {
-        return props.isLoading ? (
+        return props?.isLoading ? (
           ShowActivityIndicator()
         ) : (
           <Text>{`No ${

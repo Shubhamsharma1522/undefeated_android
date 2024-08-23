@@ -19,7 +19,6 @@ import {reportUser} from '../../store/actions/story';
 import {MeInputField} from '../MeInputField';
 import {Platform} from 'react-native';
 
-
 const MeModal = props => {
   console.log('showing props here is', props);
   const [showReportAlert, setShowReportAlert] = useState(false);
@@ -182,10 +181,11 @@ const MeModal = props => {
                     />
                   )} */}
                     <MeButton
-                      title={'View profile'}
+                      title={'View Profile'}
                       containerStyles={styles.btnContainer}
                       textStyles={styles.buttonTitle}
                       onPress={() => {
+                        console.log('ME_MODEL', {props});
                         onCloseModal();
                         navigate('Settings', {
                           userId: props?.member?.userId,

@@ -29,7 +29,7 @@ import {Text} from 'react-native';
 import AllData from './Tabs/allData';
 import MyData from './Tabs/myData';
 import MeBottomNavbar from '../../../../components/BottomNavbar';
-
+import MeCustomTabView from '../../../../components/MeTabView';
 const initialLayout = {width: Dimensions.get('window').width};
 const ChatRoom = props => {
   const [loader, setLoader] = useState(false);
@@ -74,7 +74,7 @@ const ChatRoom = props => {
     },
   );
   // useEffect(() => {
-  //   let propsData = props?.navigation?.state?.params;
+  //   let propsData = props?.route.params;
 
   //   OneSignal.addEventListener('received', data => onReceived(data, propsData));
 
@@ -114,10 +114,10 @@ const ChatRoom = props => {
   // useSelector(state => console.log("+++++",state))
 
   const [index, setIndex] = useState(1);
-  const [routes] = useState([
-    {key: 'MyChatRooms', title: 'My Huddles'},
-    {key: 'AllChatRooms', title: 'All Huddles'},
-  ]);
+  // const [routes] = useState([
+  //   {key: 'MyRooms', label: 'My Huddles'},
+  //   {key: 'AllRooms', label: 'All Huddles'},
+  // ]);
 
   React.useEffect(() => {
     if (
@@ -142,29 +142,35 @@ const ChatRoom = props => {
     dispatch(TASKS.getChatRooms(params));
     dispatch(TASKS.getSportList('CONTEST'));
   }, []);
-  const renderScene = ({route}) => {
-   <View><Text>123</Text></View>
-    // switch (route.key) {
-    //   case 'AllChatRooms':
-    //     return <AllData data={allData} user={user} />;
-    //   case 'MyChatRooms':
-    //     return <MyData data={myData} user={user} />;
-    // }
-  };
+  // const renderScene = ({route}) => {
+  //   <View>
+  //     <Text>123</Text>
+  //   </View>;
+  //   // switch (route.key) {
+  //   //   case 'AllRooms':
+  //   //     return <AllData data={allData} user={user} />;
+  //   //   case 'MyRooms':
+  //   //     return <MyData data={myData} user={user} />;
+  //   // }
+  // };
 
-  const renderTabBar = props => (
-    <TabBar
-      {...props}
-      style={{backgroundColor: COLORS.appColour}}
-      indicatorStyle={{backgroundColor: COLORS.white}}
-      getLabelText={({route}) => route.title}
-    />
-  );
+  // const renderTabBar = props => (
+  //   <TabBar
+  //     {...props}
+  //     style={{backgroundColor: COLORS.appColour}}
+  //     indicatorStyle={{backgroundColor: COLORS.white}}
+  //     getLabelText={({route}) => route.title}
+  //   />
+  // );
 
   const handleCreateNewChatRoom = () => {
     props.navigation.navigate('NewChatRoom');
   };
-
+  const tabs = [
+    {key: 'MyRooms', label: 'My Huddles'},
+    {key: 'AllRooms', label: 'All Huddles'},
+  
+  ];
   return (
     <>
       <MeHeader
@@ -182,7 +188,7 @@ const ChatRoom = props => {
         }}
       />
       {/* <MeWelcome
-        userName={user ? user.username : 'No name'}
+        userName={user ? user.username : ''}
         // title={'All Bets'}
         onPress={this.renderAllBets}
       /> */}
@@ -227,14 +233,25 @@ const ChatRoom = props => {
             <Image source={APPLICATION_IMAGES.plus} style={styles.img} />
           </TouchableOpacity>
           <SafeAreaProvider>
-            <TabView
+            <MeCustomTabView
+              tabs={tabs}
+              initialTabKey="AllRooms" // Set the initial tab key here
+              data={{
+                allData: allData, 
+                myData: myData, 
+              }}
+              user={user}
+              AllData={AllData} // Pass the AllData component
+              MyData={MyData}
+            />
+            {/* <TabView
               navigationState={{index, routes}}
               renderScene={renderScene}
               onIndexChange={setIndex}
               initialLayout={initialLayout}
               // bounces={true}
               renderTabBar={renderTabBar}
-            />
+            /> */}
           </SafeAreaProvider>
         </>
       )}

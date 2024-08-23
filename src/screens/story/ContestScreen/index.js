@@ -53,11 +53,6 @@ const Contest = () => {
           style={styles.contestParty}
           onPress={() => navigate('PickemContestParty')}>
           {Platform.OS === 'ios' ? (
-            // <Image
-            //   key={Math.random()}
-            //   source={{uri: APPLICATION_IMAGES.pickemAws, cache: 'reload'}}
-            //   style={styles.image}
-            // />
             <Image
               style={styles.image}
               source={{uri: APPLICATION_IMAGES.pickemAws}}

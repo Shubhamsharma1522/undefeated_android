@@ -44,7 +44,7 @@ const ProfileContainer = ({
   const loggedInUser = useSelector(state => state.auth.user);
 
   console.log(userProfile?.profile_image_url, {loggedInUser, userProfile});
-  const isOwnProfile = loggedInUser.id === userProfile.id;
+  const isOwnProfile = loggedInUser?.id === userProfile?.id;
 
   const {
     mutate: updateUserFollowerAndFollowing,
@@ -52,7 +52,7 @@ const ProfileContainer = ({
   } = useUpdateUserFollowerAndFollowing();
 
   const [followButtonText, setFollowButtonText] = useState(
-    getFollowButtonText(userProfile.isFollowing),
+    getFollowButtonText(userProfile?.isFollowing),
   );
 
   const onSuccess = ({isFollowing}) => {
@@ -61,7 +61,7 @@ const ProfileContainer = ({
 
   useEffect(() => {
     setFollowButtonText(getFollowButtonText(userProfile.isFollowing));
-  }, [userProfile.isFollowing]);
+  }, [userProfile?.isFollowing]);
 
   if (!userProfile) {
     return;
@@ -115,7 +115,7 @@ const ProfileContainer = ({
               </Text>
             </FieldWithEditButton>
             <Text allowFontScaling={false} style={styles.commonText}>
-              {'@' + userProfile.username}
+              {'@' + userProfile?.username}
             </Text>
           </View>
           {!isOwnProfile && (
@@ -123,7 +123,7 @@ const ProfileContainer = ({
               title={followButtonText}
               onPress={() =>
                 updateUserFollowerAndFollowing(
-                  {userId: userProfile.id},
+                  {userId: userProfile?.id},
                   {onSuccess},
                 )
               }
@@ -140,8 +140,10 @@ const ProfileContainer = ({
           <TouchableOpacity
             onPress={() =>
               navigate('FollowerAndFollowing', {
-                userId: userProfile.id,
-                initialScreen: FOLLOW_ROUTES.FOLLOWERS,
+                params: {
+                  userId: userProfile?.id,
+                  initialScreen: FOLLOW_ROUTES.FOLLOWERS,
+                },
               })
             }>
             <Text
@@ -157,8 +159,10 @@ const ProfileContainer = ({
             style={{marginLeft: WP('4')}}
             onPress={() =>
               navigate('FollowerAndFollowing', {
-                userId: userProfile.id,
-                initialScreen: FOLLOW_ROUTES.FOLLOWINGS,
+                params: {
+                  userId: userProfile?.id,
+                  initialScreen: FOLLOW_ROUTES.FOLLOWINGS,
+                },
               })
             }>
             <Text
