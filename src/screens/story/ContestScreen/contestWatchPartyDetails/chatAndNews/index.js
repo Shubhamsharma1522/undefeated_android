@@ -56,7 +56,7 @@ const ChatAndNewsScreen = props => {
 
   const {params} = props.route.params;
   const {isDisconnected, socket} = useChatSocket(
-    params.groupData ? params.groupData.slug : null,
+    params?.groupData ? params?.groupData.slug : null,
     false,
     'Contest',
   );
@@ -109,7 +109,7 @@ const ChatAndNewsScreen = props => {
           TASKS.generatePresingedUrl({
             auth_token: user.auth_token,
             imageData: chatImage,
-            filePath: `chat/${params.groupData.slug}/images/${uuid.v4()}`,
+            filePath: `chat/${params?.groupData.slug}/images/${uuid.v4()}`,
           }),
         );
         console.log({presignedUri});
@@ -167,7 +167,7 @@ const ChatAndNewsScreen = props => {
         isDelivered: false,
         createdAt: new Date(),
         id: uuid.v4(),
-        chatId: params.groupData.slug,
+        chatId: params?.groupData.slug,
         senderData: {
           user: user.id,
           username: user.username,
@@ -322,7 +322,7 @@ const ChatAndNewsScreen = props => {
   // console.log({chatMessages, messages});
   const onRefresh = () => {
     props.navigation.replace('ChatAndNewsScreen', {
-      groupData: params.groupData,
+      groupData: params?.groupData,
       standings: 'private',
     });
     // socket ? socket.connect() : establishSocketConnection();
@@ -370,9 +370,9 @@ const ChatAndNewsScreen = props => {
         <View style={styles.chatCardHeader}>
           <View style={styles.chatCardHeaderText}>
             <Text allowFontScaling={false} style={styles.chatHeaderTitle}>
-              {params.standings === 'private'
+              {params?.standings === 'private'
                 ? params?.groupData?.title
-                : params.person.username}
+                : params?.person?.username}
             </Text>
             {params?.groupData?.team_one && params?.groupData?.team_two ? (
               <Text allowFontScaling={false} style={styles.chatHeaderSubTitle}>

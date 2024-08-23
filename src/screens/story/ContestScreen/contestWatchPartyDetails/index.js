@@ -243,7 +243,7 @@ class GroupDetails extends Component {
     const params = {groupData: this.state.navGroupParams};
     // const { sportList } = this.props;
     console.log('CHANGES', params);
-    console.log('params.groupdata####', params.groupData);
+    console.log('params?.groupData####', params?.groupData);
     console.log('params.PROPS####', this.props);
     console.log('params.state####', this.state);
     const {user} = this.props;
@@ -253,22 +253,22 @@ class GroupDetails extends Component {
         ? APPLICATION_IMAGES.pickemAws
         : APPLICATION_IMAGES.contestAws;
     // let profileImageHolder =
-    //   params && params.groupData
-    //     ? params.groupData.sport_name === 'basketball'
+    //   params && params?.groupData
+    //     ? params?.groupData.sport_name === 'basketball'
     //       ? {uri: sportList[1].sport_image}
-    //       : params.groupData.sport_name === 'football'
+    //       : params?.groupData.sport_name === 'football'
     //       ? {uri: sportList[0].sport_image}
-    //       : params.groupData.sport_name === 'tennis'
+    //       : params?.groupData.sport_name === 'tennis'
     //       ? {uri: sportList[3].sport_image}
-    //       : params.groupData.sport_name === 'golf'
+    //       : params?.groupData.sport_name === 'golf'
     //       ? {uri: sportList[2].sport_image}
-    //       : params.groupData.sport_name === 'soccer'
+    //       : params?.groupData.sport_name === 'soccer'
     //       ? {uri: sportList[4].sport_image}
-    //       : params.groupData.sport_name === 'hockey'
+    //       : params?.groupData.sport_name === 'hockey'
     //       ? {uri: sportList[6].sport_image}
-    //       : params.groupData.sport_name === 'baseball'
+    //       : params?.groupData.sport_name === 'baseball'
     //       ? {uri: sportList[7].sport_image}
-    //       : params.groupData.sport_name === 'nascar'
+    //       : params?.groupData.sport_name === 'nascar'
     //       ? {uri: sportList[5].sport_image}
     //       : null
     //     : null;
@@ -278,8 +278,8 @@ class GroupDetails extends Component {
         <ImageBackground
           style={styles.imageHeader}
           source={
-            params.groupData?.profile_image
-              ? {uri: params.groupData?.profile_image}
+            params?.groupData?.profile_image
+              ? {uri: params?.groupData?.profile_image}
               : {uri: backgroudImageHolder}
           }
           resizeMode={'cover'}>
@@ -330,17 +330,17 @@ class GroupDetails extends Component {
                   textAlign: 'center',
                   fontSize: WP('4.6'),
                 }}>
-                {params.groupData &&
-                params.groupData.members_list &&
-                params.groupData.members_list.length > 0
-                  ? params.groupData.members_list.length
+                {params?.groupData &&
+                params?.groupData.members_list &&
+                params?.groupData.members_list.length > 0
+                  ? params?.groupData.members_list.length
                   : 0}
               </Text>
             </View>
-            {params.groupData &&
-              params.groupData.members_list &&
-              params.groupData.members_list.length > 0 &&
-              params.groupData.members_list.slice(0, 7).map(member => {
+            {params?.groupData &&
+              params?.groupData.members_list &&
+              params?.groupData.members_list.length > 0 &&
+              params?.groupData.members_list.slice(0, 7).map(member => {
                 return (
                   <Image
                     source={{
@@ -365,7 +365,7 @@ class GroupDetails extends Component {
           </TouchableOpacity> */}
           <TouchableOpacity style={styles.promoteBtn}>
             <ShareButton
-              message={`Let’s meet up at https://undefeated.live/ ${params.groupData.title}. The largest online sports bar on the internet. Where you can play games, win cash, prizes and give your sports takes all the time. What’s your Take?`}
+              message={`Let’s meet up at https://undefeated.live/ ${params?.groupData.title}. The largest online sports bar on the internet. Where you can play games, win cash, prizes and give your sports takes all the time. What’s your Take?`}
             />
           </TouchableOpacity>
           {user && user.role === 2 && (

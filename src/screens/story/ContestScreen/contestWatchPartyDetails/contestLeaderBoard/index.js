@@ -488,7 +488,7 @@ class ContestLeaderboard extends Component {
                   this.toggleModal();
               }}
               onMessageBtnPressed={() => {
-                this.props.route.params.standings == 'Private'
+                this.props.route.params?.standings == 'Private'
                   ? this.showPrivateChat()
                   : this.showPublicChat(member),
                   this.toggleModal();

@@ -194,7 +194,7 @@ class Standings extends Component {
           </Text>
           <TouchableOpacity
             onPress={
-              this.props.route.params.standings == 'Private'
+              this.props.route.params?.standings == 'Private'
                 ? () => this.showPrivateChat(groupData)
                 : null
             }>
@@ -429,7 +429,7 @@ class Standings extends Component {
                 this.toggleModal();
               }}
               onMessageBtnPressed={() => {
-                this.props.route.params.standings == 'Private'
+                this.props.route.params?.standings == 'Private'
                   ? this.showPrivateChat()
                   : this.showPublicChat(member),
                   this.toggleModal();
@@ -446,7 +446,7 @@ class Standings extends Component {
 
             <View>
               {this.props.route.params
-                ? this.props.route.params.standings == 'Private'
+                ? this.props.route.params?.standings == 'Private'
                   ? this.renderPrivateGroups()
                   : this.renderPublicGroups()
                 : null}

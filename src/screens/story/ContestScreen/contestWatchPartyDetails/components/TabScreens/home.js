@@ -25,12 +25,12 @@ import {
 import {Platform} from 'react-native';
 import MeBottomNavbar from '../../../../../../components/BottomNavbar';
 import useChatSocket from '../../../../../../hooks/useChatSocket';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 const initialLayout = {width: Dimensions.get('window').width};
 
 const Home = ({props}) => {
-  console.log('Home Mount>><<PICKEM',props);
-  const navigation =useNavigation()
+  console.log('Home Mount>><<PICKEM', props);
+  const navigation = useNavigation();
   const [contestQues, setContestQueston] = useState(null);
   const [enable, setEnable] = useState(false);
   const [isQuestionAutoEnable, setIsQuestionAutoEnable] = useState(false);
@@ -50,7 +50,7 @@ const Home = ({props}) => {
   //   console.log('Inside SetTime Out');
   // }, 2000);
   // console.log("enable",enable)
-  useChatSocket(params.groupData ? params.groupData.slug : null, false);
+  useChatSocket(params?.groupData ? params?.groupData.slug : null, false);
   let messages = useSelector(state => state.story.messages);
   console.log({messages});
   React.useEffect(() => {
@@ -123,7 +123,7 @@ const Home = ({props}) => {
   }, [props.route.params]);
   // console.log(
   //   'params&&',
-  //   params && params.groupData && params.groupData.is_active,
+  //   params && params?.groupData && params?.groupData.is_active,
   // );
   const contestActiveBtn = async e => {
     // this.setState({enable: e});
@@ -186,9 +186,9 @@ const Home = ({props}) => {
     let obj = {
       auth_token: props.user.auth_token,
       enable: e,
-      slug: params.groupData.slug,
-      contest_watch_party_id: params.groupData.id,
-      sports_name: params.groupData.sport_name,
+      slug: params?.groupData.slug,
+      contest_watch_party_id: params?.groupData.id,
+      sports_name: params?.groupData.sport_name,
     };
     console.log(obj);
     await props.enableDisableQuesnContest(obj);
@@ -201,9 +201,9 @@ const Home = ({props}) => {
     let obj = {
       auth_token: props.user.auth_token,
       enable: e,
-      slug: params.groupData.slug,
-      contest_watch_party_id: params.groupData.id,
-      sports_name: params.groupData.sport_name,
+      slug: params?.groupData.slug,
+      contest_watch_party_id: params?.groupData.id,
+      sports_name: params?.groupData.sport_name,
     };
     // console.log(
     //   'enable disable quesn auto',
@@ -234,9 +234,9 @@ const Home = ({props}) => {
     let obj = {
       auth_token: props.user.auth_token,
       enable: e,
-      slug: params.groupData.slug,
-      contest_watch_party_id: params.groupData.id,
-      sports_name: params.groupData.sport_name,
+      slug: params?.groupData.slug,
+      contest_watch_party_id: params?.groupData.id,
+      sports_name: params?.groupData.sport_name,
     };
     const apiStatus = await dispatch(enableDisableContestFlag(obj));
     console.log('API STATUS', apiStatus);
@@ -256,9 +256,9 @@ const Home = ({props}) => {
 
   // const getContestDetails = details => {
   //   if (details && details.length > 0) {
-  //     console.log('details', details, params.groupData.id);
+  //     console.log('details', details, params?.groupData.id);
   //     let contestIndex = details.findIndex(
-  //       det => det.id == params.groupData.id,
+  //       det => det.id == params?.groupData.id,
   //     );
   //     console.log('contestIndex', contestIndex);
   //     if (contestIndex > -1) {
@@ -269,23 +269,23 @@ const Home = ({props}) => {
   // };
   console.log('props.group', props);
   console.log('props', props);
-  console.log('params.groupData', params.groupData);
+  console.log('params?.groupData', params?.groupData);
 
   return (
     <>
       <ScrollView contentContainerStyle={styles.scene}>
         <Text style={styles.title}>{params?.groupData?.title}</Text>
         <Text style={styles.title}>
-          {params.groupData &&
-          params.groupData.team_one &&
-          params.groupData.team_two
-            ? params.groupData.team_one + ' V/S ' + params.groupData.team_two
+          {params?.groupData &&
+          params?.groupData.team_one &&
+          params?.groupData.team_two
+            ? params?.groupData.team_one + ' V/S ' + params?.groupData.team_two
             : null}
         </Text>
         {user &&
         user.role === APPLICATION_CONSTANTS.USER_ADMIN &&
-        params.groupData &&
-        params.groupData.is_private === 1 ? (
+        params?.groupData &&
+        params?.groupData.is_private === 1 ? (
           <View
             style={{
               display: 'flex',
@@ -295,8 +295,8 @@ const Home = ({props}) => {
             }}>
             <Text style={styles.privateText}>Private</Text>
             <Text style={styles.subTitle}>
-              {params.groupData && params.groupData.contest_code
-                ? ` | Contest Code: ${params.groupData.contest_code} `
+              {params?.groupData && params?.groupData.contest_code
+                ? ` | Contest Code: ${params?.groupData.contest_code} `
                 : null}
             </Text>
           </View>
@@ -389,9 +389,7 @@ const Home = ({props}) => {
             (props.groupData.status === 1 ||
               props.groupData.auto_question_status === 1) ? (
             <TouchableOpacity
-              onPress={() =>
-                navigation.navigate('UserQuestionAnswer', params)
-              }
+              onPress={() => navigation.navigate('UserQuestionAnswer', params)}
               style={styles.viewIconTab}>
               <Text style={styles.contestOn}>{showText ? 'ON' : ''}</Text>
               <Text
@@ -408,9 +406,7 @@ const Home = ({props}) => {
             </TouchableOpacity>
           ) : (
             <TouchableOpacity
-              onPress={() =>
-                navigation.navigate('UserQuestionAnswer', params)
-              }
+              onPress={() => navigation.navigate('UserQuestionAnswer', params)}
               style={styles.viewIconTab}>
               <Text style={styles.contestOn}>OFF</Text>
               {/* <Image source={APPLICATION_IMAGES.placeBet} style={styles.image} /> */}
@@ -543,20 +539,19 @@ const Home = ({props}) => {
           ) : null}
         </View>
 
-        {isError &&
-          props?.user?.role === APPLICATION_CONSTANTS.USER_ADMIN && (
-            <View style={{marginTop: HP(2)}}>
-              <Text
-                style={{
-                  textAlign: 'center',
-                  color: 'red',
-                  fontWeight: '600',
-                  fontSize: 16,
-                }}>
-                No NFL Data. Please try again!
-              </Text>
-            </View>
-          )}
+        {isError && props?.user?.role === APPLICATION_CONSTANTS.USER_ADMIN && (
+          <View style={{marginTop: HP(2)}}>
+            <Text
+              style={{
+                textAlign: 'center',
+                color: 'red',
+                fontWeight: '600',
+                fontSize: 16,
+              }}>
+              No NFL Data. Please try again!
+            </Text>
+          </View>
+        )}
         {checkContestFinishStatus() &&
         props?.user?.role !== APPLICATION_CONSTANTS.USER_ADMIN ? (
           <View style={styles.centerAlignContestFinished}>
@@ -575,9 +570,11 @@ const Home = ({props}) => {
                 marginTop: HP(2),
               }}
               onPress={() =>
-                navigation.navigate('HowToPlay', {params:{
-                  group: props.route.params.groupData,
-                }})
+                navigation.navigate('HowToPlay', {
+                  params: {
+                    group: props.route.params?.groupData,
+                  },
+                })
               }>
               <Text allowFontScaling={false} style={styles.howToPlayTitle}>
                 How To Play?

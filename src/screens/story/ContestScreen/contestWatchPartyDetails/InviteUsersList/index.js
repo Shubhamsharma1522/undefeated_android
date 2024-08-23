@@ -170,7 +170,7 @@ class InviteUsersList extends Component {
   };
   callDone = async () => {
     const {id, title, description, slug} =
-      this.props.route.params.params.groupData;
+      this.props.route.params.params?.groupData;
     //    console.log("params in call done", params)
     const {selectedUser} = this.state;
     console.log('showing selected user', selectedUser);

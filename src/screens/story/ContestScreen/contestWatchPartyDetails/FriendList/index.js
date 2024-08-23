@@ -49,7 +49,7 @@ class FriendLists extends Component {
     console.log(
       'showing user to be send message',
       user,
-      this.props.route.params.params.groupData.title,
+      this.props.route.params.params?.groupData.title,
     );
     // alert(user.givenName)
     // alert(user.phoneNumbers[0].number)
@@ -58,7 +58,7 @@ class FriendLists extends Component {
         phone_number: `${user.phoneNumbers[0].number.split(' ').join('')}`,
         auth_token: this.props.user.auth_token,
         invited_name: Platform.OS === 'ios' ? user.givenName : user.displayName,
-        party_name: this.props.route.params.params.groupData.title,
+        party_name: this.props.route.params.params?.groupData.title,
         app_download_link: '(using the link below)',
         is_contest: true,
       };
@@ -171,7 +171,6 @@ class FriendLists extends Component {
       onPress = {this.inviteFriend}
       /> */}
               {this.renderContacts()}
-             
             </>
           )}
         </MeWrapper>

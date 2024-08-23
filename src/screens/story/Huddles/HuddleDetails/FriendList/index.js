@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
   View,
   Text,
@@ -8,10 +8,10 @@ import {
   TextInput,
   FlatList,
 } from 'react-native';
-import { connect } from 'react-redux';
-import { MeWrapper } from '../../../../../components/MeWrapper';
-import { MeHeader } from '../../../../../components/MeHeader';
-import { styles } from './styles';
+import {connect} from 'react-redux';
+import {MeWrapper} from '../../../../../components/MeWrapper';
+import {MeHeader} from '../../../../../components/MeHeader';
+import {styles} from './styles';
 import {
   APPLICATION_CONSTANTS,
   back,
@@ -22,10 +22,10 @@ import {
 } from '../../../../../services';
 import Contacts from 'react-native-contacts';
 
-import { MeButton } from '../../../../../components/MeButton';
+import {MeButton} from '../../../../../components/MeButton';
 import * as TASKS from '../../../../../store/actions/index';
 import MeBottomNavbar from '../../../../../components/BottomNavbar';
-import { MeInputField } from '../../../../../components/MeInputField';
+import {MeInputField} from '../../../../../components/MeInputField';
 class FriendLists extends Component {
   constructor(props) {
     super(props);
@@ -49,7 +49,7 @@ class FriendLists extends Component {
     console.log(
       'showing user to be send message',
       user,
-      this.props.route.params.params.groupData.title,
+      this.props.route.params.params?.groupData.title,
     );
     // alert(user.givenName)
     // alert(user.phoneNumbers[0].number)
@@ -58,13 +58,13 @@ class FriendLists extends Component {
         phone_number: `${user.phoneNumbers[0].number.split(' ').join('')}`,
         auth_token: this.props.user.auth_token,
         invited_name: Platform.OS === 'ios' ? user.givenName : user.displayName,
-        party_name: this.props.route.params.params.groupData.title,
+        party_name: this.props.route.params.params?.groupData.title,
         app_download_link: '(using the link below)',
         type: 'chat',
       };
       await this.props.inviteUser(invite);
       await navigate('ChatRooms');
-    } catch (error) { }
+    } catch (error) {}
   }
   componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
@@ -72,25 +72,25 @@ class FriendLists extends Component {
     try {
       getAllContacts(
         contacts => {
-          this.setState({ contacts: contacts, loading: false, temp: contacts });
+          this.setState({contacts: contacts, loading: false, temp: contacts});
           console.log('showing fetched contatcs', contacts);
           this.arrayholder = contacts;
         },
         reject => {
-          this.setState({ loading: false });
+          this.setState({loading: false});
         },
       );
     } catch (error) {
-      this.setState({ loading: false });
+      this.setState({loading: false});
     }
   }
   renderContacts = () => {
-    const { contacts } = this.state;
+    const {contacts} = this.state;
     return (
       <View style={styles.contactParent}>
         <FlatList
           data={contacts}
-          renderItem={({ item }) => (
+          renderItem={({item}) => (
             <View style={styles.rowStyles} key={Math.random()}>
               <Text allowFontScaling={false} style={styles.rowText}>
                 {Platform.OS === 'ios' ? item.givenName : item.displayName}
@@ -121,7 +121,7 @@ class FriendLists extends Component {
         });
       } else {
         Contacts.getContactsMatchingString(text, (err, contacts) => {
-          this.setState({ contacts });
+          this.setState({contacts});
         });
       }
     } catch (error) {
@@ -130,8 +130,8 @@ class FriendLists extends Component {
   };
 
   render() {
-    const { loading } = this.state;
-    const { user } = this.props;
+    const {loading} = this.state;
+    const {user} = this.props;
     return (
       <>
         <MeHeader
@@ -142,15 +142,16 @@ class FriendLists extends Component {
           showlogo={true}
           profilePicUrl={user ? user.profile_image : null}
           showProfilePic={true}
-        // hideBackBtn = {true}
+          // hideBackBtn = {true}
         />
         <MeWrapper>
-
           {loading ? (
-            <View style={styles.loaderContainer}>{ShowActivityIndicator()}</View>
+            <View style={styles.loaderContainer}>
+              {ShowActivityIndicator()}
+            </View>
           ) : (
             <>
-               <View style={styles.searchbarContainer}>
+              <View style={styles.searchbarContainer}>
                 <MeInputField
                   style={styles.searchBar}
                   //  value={reportingMessage}
@@ -177,7 +178,6 @@ class FriendLists extends Component {
           <MeBottomNavbar />
         )}
       </>
-
     );
   }
 }

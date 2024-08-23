@@ -44,7 +44,7 @@ const UsersListings = props => {
   };
 
   const onRedirectToMessage = person => {
-    let groupData = props.route.params.params.groupData;
+    let groupData = props.route.params.params?.groupData;
     console.log('member**', member, groupData);
 
     setShowModal(false);
@@ -52,7 +52,7 @@ const UsersListings = props => {
   };
   const onRedirectToBet = () => {
     console.log('watchPartPressed', groups, props);
-    let groupData = props.route.params.params.groupData;
+    let groupData = props.route.params.params?.groupData;
     setShowModal(false);
     props.navigation.navigate('RenderQuickBets', {
       group: groupData,
@@ -69,8 +69,7 @@ const UsersListings = props => {
   const removeMember = async member => {
     console.log('in remove member', member);
 
-    const {id, title, description, slug} =
-      props.route.params.params.groupData;
+    const {id, title, description, slug} = props.route.params.params?.groupData;
     //    console.log("params in call done", params)
     // const {  selectedUser } = this.state
     console.log('showing selected user', selectedUser);
@@ -156,19 +155,19 @@ const UsersListings = props => {
         </View>
       </View>
       <Text style={styles.details} allowFontScaling={false}>
-        Members - ({params.groupData.members_list.length})
+        Members - ({params?.groupData.members_list.length})
       </Text>
 
       <ScrollView
         contentContainerStyle={styles.scene}
         showsVerticalScrollIndicator={false}>
-        {params.groupData ? (
-          params.groupData.members_list.length > 0 ? (
-            params.groupData.members_list.map((member, index) => {
+        {params?.groupData ? (
+          params?.groupData.members_list.length > 0 ? (
+            params?.groupData.members_list.map((member, index) => {
               return (
                 <UserListItem
                   member={member}
-                  owner={params.groupData?.owner_information}
+                  owner={params?.groupData?.owner_information}
                   onMemberTapped={() => toggleModal(member)}
                   onMemberRemoveTapped={toggleRemoveMemberModal}
                   index={index}

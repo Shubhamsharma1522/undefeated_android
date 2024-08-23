@@ -87,8 +87,7 @@ class ChatRoomDetails extends Component {
     // OneSignal.addEventListener('received', data =>
     //   this.onReceived(data, this.props),
     // );
-    console.log("CUSTMMMM",props?.route,{props})
-   
+    console.log('CUSTMMMM', props?.route, {props});
   }
 
   async componentDidMount() {
@@ -104,7 +103,7 @@ class ChatRoomDetails extends Component {
       if (this.props.route.params.fromNotification == 1) {
         console.log('ChatRoomDetails componentDidMount from Notification');
         let params1 = {
-          room_id: this.props.route.params.groupData.id,
+          room_id: this.props.route.params?.groupData.id,
           auth_token: this.props.user.auth_token,
         };
         console.log(
@@ -123,9 +122,9 @@ class ChatRoomDetails extends Component {
           '🚀 ~ file: index.js:110 ~ ChatRoomDetails componentDidMount ~ getChatRoomByIdData:',
           getChatRoomByIdData,
         );
-        groupData = getChatRoomByIdData.data;
+        groupData = getChatRoomByIdData?.data;
 
-        this.props.route.params.groupData = groupData;
+        // this.props.route.params?.groupData = groupData;
         this.setState({
           navGroupParams1: groupData,
         });
@@ -303,14 +302,11 @@ class ChatRoomDetails extends Component {
   // }
   render() {
     // const { params } = this.props.route.params;
-    console.log(
-      'INSIDE<><>',
-      this.props,
-    );
-    const params = {groupData: this.props.route.params.groupData};
+    console.log('INSIDE<><>', this.props);
+    const params = {groupData: this.props.route.params?.groupData};
 
     //   params = {groupData: this.state.navGroupParams1};
-    // else params = {groupData: this.props.route.params.params.groupData};
+    // else params = {groupData: this.props.route.params.params?.groupData};
     // const params = {groupData: this.state.navGroupParams};
     const {sportList} = this.props;
     // const {navGroupParams1} = this.state;
@@ -319,21 +315,20 @@ class ChatRoomDetails extends Component {
       params,
     );
 
-    console.log('params.groupdata####', params.groupData);
+    console.log('params?.groupData####', params?.groupData);
     console.log('params.PROPS####', this.props);
     console.log('params.state####', this.state);
     const {user} = this.props;
 
     let backgroudImageHolder = APPLICATION_IMAGES.huddleAws;
-    
 
     return (
       <View style={styles.container}>
         <ImageBackground
           style={styles.imageHeader}
           source={
-            params.groupData?.profile_image
-              ? {uri: params.groupData?.profile_image}
+            params?.groupData?.profile_image
+              ? {uri: params?.groupData?.profile_image}
               : {uri: backgroudImageHolder}
           }
           resizeMode={'cover'}>
@@ -384,17 +379,17 @@ class ChatRoomDetails extends Component {
                   textAlign: 'center',
                   fontSize: WP('4.6'),
                 }}>
-                {params.groupData &&
-                params.groupData.members_list &&
-                params.groupData.members_list.length > 0
-                  ? params.groupData.members_list.length
+                {params?.groupData &&
+                params?.groupData.members_list &&
+                params?.groupData.members_list.length > 0
+                  ? params?.groupData.members_list.length
                   : 0}
               </Text>
             </View>
-            {params.groupData &&
-              params.groupData.members_list &&
-              params.groupData.members_list.length > 0 &&
-              params.groupData.members_list.slice(0, 7).map(member => {
+            {params?.groupData &&
+              params?.groupData.members_list &&
+              params?.groupData.members_list.length > 0 &&
+              params?.groupData.members_list.slice(0, 7).map(member => {
                 return (
                   <Image
                     source={{
@@ -411,7 +406,7 @@ class ChatRoomDetails extends Component {
 
           <TouchableOpacity style={styles.promoteBtn}>
             <ShareButton
-              message={`Let’s meet up at https://undefeated.live/ ${params.groupData.title}. The largest online sports bar on the internet. Where you can play games, win cash, prizes and give your sports takes all the time. What’s your Take?`}
+              message={`Let’s meet up at https://undefeated.live/ ${params?.groupData.title}. The largest online sports bar on the internet. Where you can play games, win cash, prizes and give your sports takes all the time. What’s your Take?`}
             />
           </TouchableOpacity>
           {user && user.slug === params?.groupData?.owner_information?.slug && (
@@ -436,10 +431,9 @@ class ChatRoomDetails extends Component {
           ) : null}
         </ImageBackground>
 
-  
         <View style={styles.tabs}>
           <ChatAndNews
-            groupData={this.props.route.params.groupData}
+            groupData={this.props.route.params?.groupData}
             standings={'private'}
             navigation={this.props.navigation}
             navGroupParams1={this.state.navGroupParams1}

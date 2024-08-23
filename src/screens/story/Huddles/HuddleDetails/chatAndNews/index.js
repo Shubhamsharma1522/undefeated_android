@@ -60,7 +60,7 @@ const ChatAndNewsScreen = props => {
     : {groupData: props?.groupData};
   console.log('PARAMS INSIDE>>> HUDDLE', {params: params});
   const {isDisconnected, socket} = useChatSocket(
-    params.groupData ? params.groupData.slug : null,
+    params?.groupData ? params?.groupData.slug : null,
     false,
     'Huddle',
   );
@@ -116,7 +116,7 @@ const ChatAndNewsScreen = props => {
           TASKS.generatePresingedUrl({
             auth_token: user.auth_token,
             imageData: chatImage,
-            filePath: `chat/${params.groupData.slug}/images/${uuid.v4()}`,
+            filePath: `chat/${params?.groupData.slug}/images/${uuid.v4()}`,
           }),
         );
         console.log({presignedUri});
@@ -172,7 +172,7 @@ const ChatAndNewsScreen = props => {
         isDelivered: false,
         createdAt: new Date(),
         id: uuid.v4(),
-        chatId: params.groupData.slug,
+        chatId: params?.groupData.slug,
         senderData: {
           user: user.id,
           username: user.username,
@@ -323,7 +323,7 @@ const ChatAndNewsScreen = props => {
     let messagePrivateBody = {
       auth_token: user.auth_token,
       userName: user.username,
-      receiver_id: params.groupData ? params.groupData.slug : null,
+      receiver_id: params?.groupData ? params?.groupData.slug : null,
       // message: messages[0].text,
       message: message,
       message_type: 2, // Individual = 1, Group = 2,
@@ -337,7 +337,7 @@ const ChatAndNewsScreen = props => {
     // establishSocketConnection();
     // socket ? socket.connect() : establishSocketConnection();
     // props.navigation.replace('ChatAndNewsScreen', {params:{
-    //   groupData: params.groupData,
+    //   groupData: params?.groupData,
     //   standings: 'private',
     // }});
     // screen: 'ChatRoomDetails',
@@ -378,9 +378,9 @@ const ChatAndNewsScreen = props => {
         <Text allowFontScaling={false} style={styles.chatHeaderTitle}>
           {params?.groupData?.title != '' ? params?.groupData?.title : 'Huddle'}
         </Text>
-        {params.groupData.team_one && params.groupData.team_two ? (
+        {params?.groupData.team_one && params?.groupData.team_two ? (
           <Text style={styles.chatHeaderTitle}>
-            {params.groupData.team_one} V/S {params.groupData.team_two}
+            {params?.groupData.team_one} V/S {params?.groupData.team_two}
           </Text>
         ) : null}
         {
@@ -388,8 +388,8 @@ const ChatAndNewsScreen = props => {
           // user.role === APPLICATION_CONSTANTS.USER_ADMIN &&
           user &&
           user.slug === params?.groupData?.owner_information?.slug &&
-          params.groupData &&
-          params.groupData.is_private === 1 ? (
+          params?.groupData &&
+          params?.groupData.is_private === 1 ? (
             <View
               style={{
                 display: 'flex',
@@ -399,8 +399,8 @@ const ChatAndNewsScreen = props => {
               }}>
               <Text style={styles.privateText}>Private</Text>
               <Text style={styles.subTitle}>
-                {params.groupData && params.groupData.code
-                  ? ` | Contest Code: ${params.groupData.code} `
+                {params?.groupData && params?.groupData.code
+                  ? ` | Contest Code: ${params?.groupData.code} `
                   : null}
               </Text>
             </View>

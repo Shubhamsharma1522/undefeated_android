@@ -144,7 +144,7 @@ class InviteUsersList extends Component {
     const {contextAllQuestion} = this.state;
 
     console.log('question', question, contextAllQuestion);
-    const {id} = this.props.route.params.params.groupData;
+    const {id} = this.props.route.params.params?.groupData;
     const {auth_token} = this.props.user;
 
     if (contextAllQuestion.some(e => e.isAdded === 2)) {
@@ -199,7 +199,7 @@ class InviteUsersList extends Component {
   deleteUserToGroup = async question => {
     const {contextAllQuestion} = this.state;
 
-    const {id} = this.props.route.params.params.groupData;
+    const {id} = this.props.route.params.params?.groupData;
     const {auth_token} = this.props.user;
 
     var newData = contextAllQuestion.map(el => {
@@ -228,8 +228,7 @@ class InviteUsersList extends Component {
     }
   };
   callDone = async () => {
-    const {id, title, description} =
-      this.props.route.params.params.groupData;
+    const {id, title, description} = this.props.route.params.params?.groupData;
     //    console.log("params in call done", params)
     const {selectedQuestion} = this.state;
     console.log('this.props.navigation', this.props.navigation);
@@ -254,7 +253,7 @@ class InviteUsersList extends Component {
   //ONLY FOR ADMIN
   toggleAnswer = async (e, question) => {
     // console.log('in toggle Answer', e, question);
-    const {id} = this.props.route.params.params.groupData;
+    const {id} = this.props.route.params.params?.groupData;
 
     const {auth_token} = this.props.user;
     const {previousQuestion} = this.state;
@@ -531,8 +530,7 @@ class InviteUsersList extends Component {
                 onPress={async () => {
                   // this.deleteUserToGroup(user);
                   console.log('useruser123', user);
-                  const {groupData, enable} =
-                    this.props.route.params.params;
+                  const {groupData, enable} = this.props.route.params.params;
 
                   let params = {
                     auth_token: auth_token,
@@ -659,19 +657,18 @@ class InviteUsersList extends Component {
     const {loading} = this.state;
     return (
       <View style={{flex: 1}}>
-          <MeHeader
-            title={'Questions'}
-            onBackBtn={() => {
-              back();
-            }}
-            showlogo={true}
-            // enable={true}
-            // enableValue={this.state.enable}
-            // toggleSwitch={this.toggleSwitch}
-            // hideBackBtn = {true}
-          />
+        <MeHeader
+          title={'Questions'}
+          onBackBtn={() => {
+            back();
+          }}
+          showlogo={true}
+          // enable={true}
+          // enableValue={this.state.enable}
+          // toggleSwitch={this.toggleSwitch}
+          // hideBackBtn = {true}
+        />
         <MeWrapper>
-        
           {loading ? (
             <View style={styles.loaderContainer}>
               {ShowActivityIndicator()}

@@ -99,7 +99,7 @@ const Home = props => {
   }, [props.props.route.params.params]);
   // console.log(
   //   'params&&',
-  //   params && params.groupData && params.groupData.is_active,
+  //   params && params?.groupData && params?.groupData.is_active,
   // );
   const contestActiveBtn = async e => {
     // this.setState({enable: e});
@@ -162,9 +162,9 @@ const Home = props => {
     let obj = {
       auth_token: props.props.user.auth_token,
       enable: e,
-      slug: params.groupData.slug,
-      contest_watch_party_id: params.groupData.id,
-      sports_name: params.groupData.sport_name,
+      slug: params?.groupData.slug,
+      contest_watch_party_id: params?.groupData.id,
+      sports_name: params?.groupData.sport_name,
     };
     console.log(obj);
     await props.props.enableDisableQuesnContest(obj);
@@ -177,9 +177,9 @@ const Home = props => {
     let obj = {
       auth_token: props.props.user.auth_token,
       enable: e,
-      slug: params.groupData.slug,
-      contest_watch_party_id: params.groupData.id,
-      sports_name: params.groupData.sport_name,
+      slug: params?.groupData.slug,
+      contest_watch_party_id: params?.groupData.id,
+      sports_name: params?.groupData.sport_name,
     };
     // console.log(
     //   'enable disable quesn auto',
@@ -204,24 +204,24 @@ const Home = props => {
   };
   console.log('props.group', props.group);
   console.log('props.props', props.props);
-  console.log('params.groupData', params.groupData);
+  console.log('params?.groupData', params?.groupData);
   return (
     <ScrollView contentContainerStyle={styles.scene}>
       <Text style={styles.title}>
-        {params.groupData.type !== 3
-          ? params.groupData &&
-            params.groupData.team_one &&
-            params.groupData.team_two
-            ? params.groupData.team_one + ' V/S ' + params.groupData.team_two
+        {params?.groupData.type !== 3
+          ? params?.groupData &&
+            params?.groupData.team_one &&
+            params?.groupData.team_two
+            ? params?.groupData.team_one + ' V/S ' + params?.groupData.team_two
             : null
-          : params.groupData.title}
+          : params?.groupData.title}
       </Text>
       {props &&
       props.props &&
       props.props.user &&
       props.props.user.role === APPLICATION_CONSTANTS.USER_ADMIN &&
-      params.groupData &&
-      params.groupData.is_private === 1 ? (
+      params?.groupData &&
+      params?.groupData.is_private === 1 ? (
         <View
           style={{
             display: 'flex',
@@ -231,8 +231,8 @@ const Home = props => {
           }}>
           <Text style={styles.privateText}>Private</Text>
           <Text style={styles.subTitle}>
-            {params.groupData && params.groupData.contest_code
-              ? ` | Contest Code: ${params.groupData.contest_code} `
+            {params?.groupData && params?.groupData.contest_code
+              ? ` | Contest Code: ${params?.groupData.contest_code} `
               : null}
           </Text>
         </View>
@@ -297,7 +297,7 @@ const Home = props => {
           style={styles.viewIconTab}
           onPress={() =>
             props.props.navigation.navigate('ChatAndNewsScreen', {
-              groupData: params.groupData,
+              groupData: params?.groupData,
               standings: 'private',
             })
           }>
