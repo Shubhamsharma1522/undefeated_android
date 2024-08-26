@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">3.19.73.226</domain> <!-- BASE_URL domain -->
+    </domain-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">undefeated-chat.uc.r.appspot.com</domain> <!-- CHAT_URL and TAKES_SERVICE_URL domain -->
+    </domain-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">4nhao9hq1e.execute-api.us-east-2.amazonaws.com</domain> <!-- USER_SERVICE_URL domain -->
+    </domain-config>
+    <base-config cleartextTrafficPermitted="true" />
+</network-security-config>
